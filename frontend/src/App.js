@@ -1,10 +1,18 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import NavBar from './components/NavBar/';
+import VehicleDetail from './components/VehicleDetail/';
+import VehicleSelection from './components/VehicleSelection/';
 
 function App() {
   return (
     <div className="App">
-      <h1>CarWallet capstone</h1>
+      <NavBar />
+      <div className="main-content">
+        <VehicleSelection />
+        <VehicleDetail />
+      </div>
+
     </div>
   );
 }

@@ -1,0 +1,18 @@
+.detail-frame{
+    border-style: solid;
+    border-color: green;
+    width: 70vw;
+    display: flex;
+
+}
+
+.vehicle-big-picture{
+
+   
+    
+}
+
+.carousel-container{
+    height: 40%;
+    width: 40%;
+}

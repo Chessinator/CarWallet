@@ -1,0 +1,14 @@
+.selection-frame{
+    width: 30vw;
+    border-color: black;
+    border-style: solid;
+    display: inline-block
+}
+
+.card-img-top{
+    float: left;
+}
+
+.card{
+    display: flex;
+}

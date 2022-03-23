@@ -3,10 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import store from './redux/store.js';
+import NavBar from './components/NavBar'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.css';
+import VehicleSelection from './components/VehicleSelection';
+import VehicleDetail from './components/VehicleDetail';
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    
+      
+      <App />
+    
   </React.StrictMode>,
   document.getElementById('root')
 );
