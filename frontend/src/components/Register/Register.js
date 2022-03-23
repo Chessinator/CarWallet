@@ -1,20 +1,22 @@
 import InputField from "../InputField/"
 import RegisterController from "../../controller/RegisterController";
-import { useState } from 'react'
+import "./Register.css"
 
 const Register = () => {
-    const [registerFields, setRegisterFields] = useState({
-        email: "",
-        password: "",
-        repassword: "",
-        firstname: "",
-        lastname: ""
-    });
-
     const { values, errors, inputChangeHandler, submitHandler } = RegisterController();
 
     return (
         <div className="register">
+            <InputField
+                name="firstname"
+                value={values.firstname}
+                error={errors.firstname}
+                onChange={inputChangeHandler} />
+            <InputField
+                name="lastname"
+                value={values.lastname}
+                error={errors.lastname}
+                onChange={inputChangeHandler} />
             <InputField
                 name="email"
                 value={values.email}
@@ -30,16 +32,9 @@ const Register = () => {
                 value={values.repassword}
                 error={errors.repassword}
                 onChange={inputChangeHandler} />
-            <InputField
-                name="firstname"
-                value={values.firstname}
-                error={errors.firstname}
-                onChange={inputChangeHandler} />
-            <InputField
-                name="lastname"
-                value={values.firstname}
-                error={errors.firstname}
-                onChange={inputChangeHandler} />
+            <button className="register-submit-button" type="submit" onClick={submitHandler}>
+                Register
+            </button>
         </div>
     );
 }

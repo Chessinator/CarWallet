@@ -13,21 +13,36 @@ const RegisterController = () => {
     const [errors, setErrors] = useState({});
 
     const passwordSecurityCheck = password => {
-        let msg = [];
+        let messages = [];
         let weakness = 0;
-        const weaknessThreshhold = 3;
+        const weaknessThreshhold = 2;
 
-        password.length < 8 && (weakness += 3, msg = [...msg, "has at least 8 letters"])
-        !(/[a-z]/.test(password)) && (weakness += 2, msg = [...msg, "has lower case letters"])
-        !(/[A-Z]/.test(password)) &&  (weakness += 1, msg = [...msg, "has upper case letters"])
-        !(/[0-9]/.test(password)) &&  (weakness += 1, msg = [...msg, "has numbers"])
-        !(/[^A-Za-z0-9]/.test(password)) &&  (weakness += 1, msg = [...msg, "has special letters"])
+        if(password.length < 8) {
+            weakness += 2;
+            messages = [...messages, "has at least 8 letters"];
+        }
+        if (!(/[a-z]/.test(password))) {
+            weakness += 2;
+            messages = [...messages, "has lower case letters"];
+        }
+        if (!(/[A-Z]/.test(password))) {
+            weakness += 1;
+            messages = [...messages, "has upper case letters"];
+        }
+        if (!(/[0-9]/.test(password))) {
+            weakness += 1;
+            messages = [...messages, "has numbers"];
+        }
+        if (!(/[^A-Za-z0-9]/.test(password))) {
+            weakness += 1;
+            messages = [...messages, "has special letters"];
+        }
         
         return {
             isValid: weakness < weaknessThreshhold,
             weakness,
             weaknessThreshhold,
-            msg
+            messages
         };
     };
 
@@ -54,39 +69,41 @@ const RegisterController = () => {
     }) => {
         let error = {};
 
-        if (!email) {
+        if (!hasStringValue(email)) {
             error.email = "Please enter an email";
         } else {
             const firstAt = email.indexOf("@");
             const lastDot = email.lastIndexOf(".");
-            if (firstAt <= 0 || lastDot < 0 || lastDot < firstAt) {
+            if (firstAt <= 0 || lastDot <= 0 || lastDot < firstAt) {
                 error.email = "Please enter a valid email";
             }
         }
 
-        const passwordResult = !passwordSecurityCheck(password);
+        const passwordResult = passwordSecurityCheck(password);
         if (!passwordResult.isValid) {
             error.password = "Please select a stronger password\n"
-            + passwordResult.msg.map(m => " - " + m).join("\n");
+            + passwordResult.messages.map(msg => "- " + msg).join("\n");
         }
 
         if (password != repassword) {
             error.repassword = "Please reenter the same password again correctly";
         }
 
-        if (!firstname) {
-            error.firstname = "Please enter a first name";
+        if (!hasStringValue(firstname)) {
+            error.firstname = "Please enter a firstname";
         }
 
-        if (!lastname) {
-            error.lastname = "Please enter a last name";
+        if (!hasStringValue(lastname)) {
+            error.lastname = "Please enter a lastname";
         }
-
         setErrors(error)
     }
 
     return { values, errors, inputChangeHandler, submitHandler }
 }
 
+const hasStringValue = (string) => {
+    return string !== null && string !== undefined && string !== "";
+}
 
 export default RegisterController;

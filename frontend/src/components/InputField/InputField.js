@@ -24,7 +24,7 @@ export const InputField = ({ name, onChange, error }) => {
                 />
             </div>
             {error &&
-                <div className="input-error-container">
+                <div className={"input-error-container" + (error && " input-error-" + propName)}>
                     <p className="input-error-text">{error}</p>
                     <i className="input-error-icon"></i>
                 </div>
@@ -34,15 +34,12 @@ export const InputField = ({ name, onChange, error }) => {
 }
 
 const getType = propName => {
-    switch (propName) {
-        case propName.includes("password"):
+    if (propName.includes("password")) {
             return "password";
-            
-        case propName.includes("email"):
-            return "email";
-    
-        default:
-            return "text";
+    } else if (propName.includes("email")) {
+        return "email";
+    } else {
+        return "text";
     }
 }
 
