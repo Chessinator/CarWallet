@@ -1,25 +1,35 @@
-const ListItem = ({vehicle}) => {
+import { useState, useEffect } from "react";
+import { NavLink, useParams } from "react-router-dom";
 
-    const { make, model, year } = vehicle;
+
+const ListItem = ({ vehicle }) => {
+
+    const {id, make, model, year, pictures } = vehicle;
+
+  
 
     return (
-        <li className="list-group-item">
-            <div className="card mb-3">
-                <div className="row g-0">
-                    <div className="col-md-4">
-                        <img src="http://via.placeholder.com/640x640" className="img-fluid rounded-start" alt="dummy" />
-                    </div>
-                    <div className="col-md-8">
-                        <div className="card-body">
-                            <h5 className="card-title">{make}</h5>
-                            <p className="card-text">{model}</p>
-                            <p className="card-text">{year}</p>
-                            <p className="card-text"><small className="text-muted">Status</small></p>
+
+        <NavLink className="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" to={`/vehicles/${id}`} role="tab" aria-controls="list-profile" >
+            <li className="list-group-item" >
+                <div className="card ">
+                    <div className="row g-0">
+                        <div className="col-md-4">
+                            <img src={pictures?.[0] ?? "http://via.placeholder.com/200x200"} className="img-fluid rounded-start" alt="dummy" />
+                        </div>
+                        <div className="col-md-8">
+                            <div className="card-body">
+                                <h5 className="card-title">{make}</h5>
+                                <p className="card-text">{model}</p>
+                                <p className="card-text">{year}</p>
+                                <p className="card-text"><small className="text-muted">Status</small></p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </li>
+            </li>
+        </NavLink>
+
     )
 
 }

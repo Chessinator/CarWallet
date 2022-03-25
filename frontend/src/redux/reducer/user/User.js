@@ -3,6 +3,24 @@ import {
     UPLOAD_USER_PICTURE
 } from '../../action/user/User.js'
 
+/*
+    {
+        id: 0,
+        email: "user1@email.test",
+        token: "1234567.9012345ffoij.fg34f2",
+        firstname: "Karl",
+        lastname: "User",
+        adress: {
+            street: "Street 123",
+            zip: "38444",
+            town: "Wolfsburg",
+            country: "Germany"
+        },
+        phonenumber: "0180 123 456 789",
+        picture: user0imageBase64
+    },
+*/
+
 export const DEFAULT_USER = (state) => ({
     id: -1,
     email: undefined,
@@ -20,7 +38,7 @@ const getUserDetails = ({
     adress,
     phonenumber
 }) => {
-    const detail = {
+    const details = {
         firstname,
         lastname,
         adress,
@@ -29,7 +47,7 @@ const getUserDetails = ({
     return details;
 }
 
-const Users = (
+export default (
     state = [],
     action = {}
 ) => {

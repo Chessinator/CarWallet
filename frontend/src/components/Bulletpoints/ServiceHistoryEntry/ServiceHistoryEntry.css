@@ -1,0 +1,3 @@
+.bulletpoint-service-history-entry::after {
+    content: "";
+}

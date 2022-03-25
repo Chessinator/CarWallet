@@ -39,14 +39,14 @@
 ## Service
 - vehicleId
 - serviceProviderId
-- dateSchedule (when the car gets hand over)
+- status
+- dateMeeting (when the car gets hand over)
 - dateCompleted (invoice, job complete)
 - serviceType
 - description
 - priceEstimation
-- serviceState
 
-## ServiceState (ENUM)
+## ServiceStatus (ENUM)
 - REQUESTED (user requested service)
 - SUGGESTED (service provider suggested service to user)
 - REJECTED (either user or service provider rejected)

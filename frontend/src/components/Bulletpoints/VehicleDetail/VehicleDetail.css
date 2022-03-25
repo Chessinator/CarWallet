@@ -1,0 +1,14 @@
+.detail-frame {
+    border-style: solid;
+    border-color: green;
+    display: flex;
+    text-align: left;
+}
+.detail-frame-container::after {
+   content: "";
+}
+
+.detail-frame-properties {
+    padding: 1rem;
+    font-size: 1.3rem;
+}

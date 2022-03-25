@@ -1,22 +1,22 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import './VehicleSelection.css'
 import '../../../node_modules/bootstrap/dist/css/bootstrap.css';
-import VehicleList from "../VehicleList/VehicleList";
 import ListItem from "../VehicleListItem/ListItem";
 
+
+import Mock from "../../context/Mock";
 
 
 const VehicleSelection = () => {
 
-    
+    const mock = useContext(Mock);
+    const vehicleIds = mock.vehicles.allIds;
 
     return (
-        <div className='selection-frame'>
-            <div className="card" >
+        <div className='selection-frame col-md-4' >
                 <ul className="list-group list-group-flush">
-                    {VehicleList.map( (vehicle, i) => <ListItem key={i} vehicle={vehicle} />)}
-                </ul>
-            </div>
+                    {vehicleIds.map( (vehicleId, i) => <ListItem key={i} vehicle={mock.vehicles.byId[vehicleId]} />)}
+                </ul>    
         </div>
     )
 }

@@ -1,8 +1,9 @@
 .selection-frame{
-    width: 30vw;
     border-color: black;
     border-style: solid;
-    display: inline-block
+    display: inline-block;
+    height: 93vh;
+    overflow-y: scroll;
 }
 
 .card-img-top{

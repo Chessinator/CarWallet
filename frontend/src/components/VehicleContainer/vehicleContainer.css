@@ -1,0 +1,7 @@
+.vehicle-container {
+    overflow-y: scroll;
+    border-style: solid;
+    border-color: blueviolet;
+    height: 93vh;
+
+}

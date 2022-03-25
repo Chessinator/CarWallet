@@ -1,0 +1,6 @@
+Ask Nmuta
+
+    - wireframe
+    - general idea presentation
+    - router + link w/ bootstrap (auto-render on click & url change)
+    - state structure (move vehicles into user or not)
