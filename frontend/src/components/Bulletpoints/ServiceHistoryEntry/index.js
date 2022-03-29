@@ -1,3 +1,3 @@
-import ServiceHistoryEntry from "./ServiceHistoryEntry"
+import ServiceHistoryEntry from "./ServiceHistoryEntry";
 
 export default ServiceHistoryEntry;

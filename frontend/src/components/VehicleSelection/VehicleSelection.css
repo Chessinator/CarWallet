@@ -1,15 +1,14 @@
-.selection-frame{
-    border-color: black;
-    border-style: solid;
+.selection-frame {
+    border-right: 1px solid black;
     display: inline-block;
     height: 93vh;
     overflow-y: scroll;
 }
 
-.card-img-top{
+.card-img-top {
     float: left;
 }
 
-.card{
+.card {
     display: flex;
 }

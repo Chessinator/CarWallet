@@ -5,7 +5,7 @@ export default {
         133: {
             id: 133,
             name: "Fritz Felgenflicker",
-            adress: {
+            address: {
                 street: "Street 124",
                 zip: "38444",
                 town: "Wolfsburg",
@@ -23,7 +23,7 @@ export default {
         299: {
             id: 299,
             name: "Martha Maulschlüssel",
-            adress: {
+            address: {
                 street: "Am Ring 24",
                 zip: "88888",
                 town: "Sometown",
@@ -37,7 +37,7 @@ export default {
         301: {
             id: 301,
             name: "Basic Repairshop",
-            adress: {
+            address: {
                 street: "Corner 13",
                 zip: "38443",
                 town: "Wolfsburg",

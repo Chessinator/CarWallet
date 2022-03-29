@@ -1,6 +1,26 @@
 * {
-  --background-color: #acacac;
-  --background-color-accent: #9e9dc9;
+  --background-color: #f7f7f7;
+  --background-color-shaded: #ebebeb;
+  --text-color-main: black;
+  --text-color-secondary: SlateGray;
+  --accent-color-1: rgb(204, 219, 236);
+  --accent-color-2: rgb(178, 204, 235);
+  --accent-color-3: linear-gradient(135deg, rgba(0,16,255,1) 0%, rgba(74,85,255,1) 16%, rgba(123,131,252,1) 100%);
+
+  --interactive-text: var(--text-color-main);
+  --interactive-background: var(--accent-color-1);
+  --interactive-background-hover: var(--accent-color-2);
+  --interactive-background-focus: var(--accent-color-2);
+  --interactive-background-active: var(--accent-color-3);
+  --interactive-placeholder-text: var(--text-color-main);
+
+  --property-background-enabled: var(--background-color);
+  --property-background-disabled: var(transparent);
+  --property-text-label: var(--text-color-main);
+  --property-text-input: var(--text-color-secondary);
+
+  --gradient-colored-light: linear-gradient(135deg, rgba(0,117,201,1) 0%, rgba(41,156,171,1) 11%, rgba(0,187,255,1) 55%, rgba(255,255,255,1) 100%);
+  --gradient-light: linear-gradient(135deg, rgba(205,205,205,1) 0%, rgba(222,222,222,1) 16%, rgba(247,247,247,1) 100%);
 }
 
 
@@ -11,9 +31,43 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+button.btn-light {
+  color: var(--interactive-text);
+  background-color: var(--interactive-background);
+}
+
+.list-group-item {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+li.list-group-item:hover .card,
+button.btn-light:hover {
+  background: var(--interactive-background-hover) !important;
+  color: rgb(243, 239, 226);
+}
+li.list-group-item:focus .card,
+button.btn-light:focus {
+  background: var(--interactive-background-focus) !important;
+  color: rgb(243, 239, 226);
+}
+
+li.list-group-item:active .card,
+.list-group-item.active .card,
+button.btn-light:active {
+  background: var(--interactive-background-active) !important;
+  color: rgb(243, 239, 226);
+}
+
+.card.active {
+  color: rgb(243, 239, 226);
 }

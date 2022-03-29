@@ -1,13 +1,13 @@
 import React from "react";
-import './InputField.css'
+import './RegisterInputField.css'
 
-export const InputField = ({ name, onChange, error }) => {
+export const RegisterInputField = ({ name, onChange, error }) => {
 
     const propName = name.toLowerCase();
 
     return (
-        <div className="input-container">
-            <div className="input-field-container">
+        <div className="input-container row">
+            <div className="input-field-container ">
                 <label
                     className="input-field-label"
                     htmlFor={propName}
@@ -43,4 +43,4 @@ const getType = propName => {
     }
 }
 
-export default InputField;
+export default RegisterInputField;

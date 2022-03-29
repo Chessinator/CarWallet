@@ -14,3 +14,6 @@ Log your fuel efficiency to see the running costs and potential fuel efficiency 
 
 ## Ride (Share) Log 
 Are you sharing your ride with others? Manage your rides (vehicle location, duration), need for future rides and more here to stay organized.
+
+## User Settings 
+Possibility to edit the users information

@@ -6,6 +6,7 @@ import services from "./services"
 
 
 export const state = {
+    user: users[Math.floor(Math.random() * users.length)],
     vehicles,
     serviceProviders,
     services
@@ -20,7 +21,7 @@ export const state = {
 - token (frontend, generated on backend)
 - firstname
 - lastname
-- adress
+- address
 - phone number (optional)
 - picture (optional)
 
@@ -37,7 +38,7 @@ export const state = {
 ## ServiceProvider
 - id (generated from backend/DB)
 - name
-- adress
+- address
 - description
 - VATNumber
 - owner

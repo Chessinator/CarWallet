@@ -1,15 +1,15 @@
 # Models
 
-## User
+## User => 
 - id (generated from backend/DB)
 - eMail
 - password (backend only)
 - token (frontend, generated on backend)
 - firstname
 - lastname
-- adress
-- phone number (optional)
-- picture (optional)
+- address {country, town, zip, street}
+- phoneNumber (optional)
+- picture (optional, base64 string)
 
 ## Vehicle
 - id (generated from backend/DB)
@@ -18,33 +18,40 @@
 - year
 - VIN (optional)
 - RegistrationNumber (optional)
-- pictures (optional)
+- pictures (optional, collection base64 string)
 - description (optional)
+- services(collection)
 
 ## ServiceProvider
 - id (generated from backend/DB)
 - name
-- adress
+- address
 - description
 - VATNumber
 - owner
 - acceptanceRules (combination of make, model and year)
 - serviceTypes
+- services(collection)
+
 
 ## ServiceType (ENUM)
 - INSPECTION
 - REPAIR
 - [INSURANCE]
 
-## Service
+## Service (one to many)
+- id
+
 - vehicleId
 - serviceProviderId
+- serviceType
+
 - status
 - dateMeeting (when the car gets hand over)
 - dateCompleted (invoice, job complete)
-- serviceType
 - description
 - priceEstimation
+- priceFinal
 
 ## ServiceStatus (ENUM)
 - REQUESTED (user requested service)
@@ -53,3 +60,5 @@
 - ACCEPTED (user and service provider accepted the service)
 - WORKING (is currently being fulfilled)
 - COMPLETED (done)
+- CONFLICT (requires user attention)
+- FAILED (encountered some error, failure etc)

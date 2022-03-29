@@ -12,7 +12,7 @@ export default [
         token: "1234567.9012345ffoij.fg34f2",
         firstname: "Karl",
         lastname: "User",
-        adress: {
+        address: {
             street: "Street 123",
             zip: "38444",
             town: "Wolfsburg",
@@ -27,7 +27,7 @@ export default [
         token: "ff3534634.9012345ffoij.fg34f2",
         firstname: "Susi",
         lastname: "Sussi",
-        adress: {
+        address: {
             street: "",
             zip: "",
             town: "Berlin",
@@ -42,7 +42,7 @@ export default [
         token: "gwef3dfg2.v24ewmvd89123d80m.fw213f",
         firstname: "Mettwurst",
         lastname: "Michael",
-        adress: {
+        address: {
             street: "",
             zip: "",
             town: "Köln",
@@ -57,7 +57,7 @@ export default [
         token: "f23f2wg.egsf132e.g2wf23qd",
         firstname: "Trudith Theresa Manynames",
         lastname: "Testington",
-        adress: {
+        address: {
             street: "",
             zip: "",
             town: "Köln",

@@ -120,7 +120,7 @@ When I visit the page without a login
 
 ### User Story 9
 As Stephie
-I want to be able to register with my email adress and password
+I want to be able to register with my email address and password
 
 | User# |  I  |  N  |  V  |  E  |  S  |  T  | SUM |
 |:------|:----|:----|:----|:----|:----|:----|----:|

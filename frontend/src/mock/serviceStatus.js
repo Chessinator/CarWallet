@@ -4,5 +4,7 @@ export default [
     "REJECTED",
     "ACCEPTED",
     "WORKING",
-    "COMPLETED"
+    "COMPLETED",
+    "CONFLICT",
+    "FAILED"
 ]
