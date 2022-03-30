@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
@@ -38,5 +39,8 @@ public class ServiceService {
         return serviceRepository.findByProviderId(id).orElseThrow(EntityNotFoundException::new);
     }
 
+    public List<String> getServiceTypes(){
+        return null;
+    }
 
 }

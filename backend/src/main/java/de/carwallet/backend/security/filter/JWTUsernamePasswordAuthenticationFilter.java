@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -23,9 +24,15 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class JWTUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    private final String SECRET_KEY = "REPLACE_THIS_DUMMY_KEY_WITH_SECRET_KEY";
+    private final AuthenticationManager authenticationManager;
+    private final String SECRET_KEY;
+
+    public JWTUsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+        this.SECRET_KEY = "REPLACE_THIS_DUMMY_KEY_WITH_SECRET_KEY";
+        // By default, UsernamePasswordAuthenticationFilter listens to "/login" path.
+        this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/api/auth/**", "POST"));
+    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
@@ -49,6 +56,7 @@ public class JWTUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
         String accessToken = generateToken(authResult.getName(), 10*60*1000L, request.getRequestURL().toString());
         String refreshToken = generateToken(authResult.getName(), 60*60*1000L, request.getRequestURL().toString());
 
+        // ADD tokens to body
         Map<String, String> tokens = new HashMap<>();
         tokens.put("access_token", accessToken);
         tokens.put("refresh_token", refreshToken);

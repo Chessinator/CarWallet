@@ -44,11 +44,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // Set permissions on endpoints
         http.authorizeHttpRequests()
                 // public endpoints do not need to be authenticated
+                .antMatchers("/api/vehicle/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
                 // all other endpoints need to be authenticated
                 .anyRequest().authenticated();
         // Add a filter to validate and authenticate requests
-        http.addFilter(new JWTUsernamePasswordAuthenticationFilter());
+        http.addFilter(new JWTUsernamePasswordAuthenticationFilter(authenticationManagerBean()));
         http.addFilterBefore(new JWTOncePerRequestFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 

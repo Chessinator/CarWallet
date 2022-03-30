@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.carwallet.backend.domain.dto.RegistrationRequest;
 import de.carwallet.backend.domain.model.User;
 import de.carwallet.backend.security.CustomUserDetailsService;
 import de.carwallet.backend.service.UserService;
@@ -35,9 +36,9 @@ public class AuthController {
     private final String TOKEN_PREFIX = "Bearer ";
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
+    public ResponseEntity<User> registerUser(@RequestBody RegistrationRequest request) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/auth/register").toUriString());
-        return ResponseEntity.created(uri).body(userService.save(user));
+        return ResponseEntity.created(uri).body(userService.registerUser(request));
     }
 
     @PostMapping("/login")
