@@ -1,0 +1,42 @@
+package de.carwallet.backend.service;
+
+import de.carwallet.backend.domain.model.User;
+import de.carwallet.backend.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class UserService {
+
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    public User save(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
+
+    public User getById(Long id){
+        return  userRepository.getById(id);
+    }
+
+    public User updateProfile(Long id, User user){
+        User userToUpdate = userRepository.getById(id);
+        BeanUtils.copyProperties(user, userToUpdate);
+        return userRepository.save(userToUpdate);
+    }
+
+    public User updatePicture(Long id, String pictureBase64){
+        User userToUpdate = userRepository.getById(id);
+        userToUpdate.setPictureBase64(pictureBase64);
+        return userRepository.save(userToUpdate);
+    }
+
+    public void delete(Long id){
+        userRepository.deleteById(id);
+    }
+
+}
