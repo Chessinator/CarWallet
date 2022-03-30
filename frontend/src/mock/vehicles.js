@@ -4,13 +4,16 @@ import {
     xdiavel3imageBase64
 } from "./vehicleImages";
 
-export default {
+const vehicles = {
     byId: {
         7: {
             id: 7,
             make: "Volkswagen",
             model: "Golf III",
-            year: "2012"
+            year: "2012",
+            vin: "",
+            registrationNumber: "",
+            description: ""
         },
         19: {
             id: 19,
@@ -31,26 +34,40 @@ export default {
                 xdiavel1imageBase64,
                 xdiavel2imageBase64,
                 xdiavel3imageBase64
-            ]
+            ],
+            vin: "",
+            registrationNumber: "",
+            description: ""
         },
         237: {
             id: 237,
             make: "Volkswagen",
             model: "Golf III",
-            year: "2012"
+            year: "2012",
+            vin: "",
+            registrationNumber: "",
+            description: ""
         },
         733: {
             id: 733,
             make: "Volkswagen",
             model: "Golf III",
-            year: "2012"
+            year: "2012",
+            vin: "",
+            registrationNumber: "",
+            description: ""
         },
         788: {
             id: 788,
             make: "Volkswagen",
             model: "Golf III",
-            year: "2012"
+            year: "2012",
+            vin: "",
+            registrationNumber: "",
+            description: ""
         },
     },
     allIds: [7, 19, 2222, 237, 733, 788]
-}
+};
+
+export default vehicles;

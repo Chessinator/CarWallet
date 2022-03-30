@@ -6,7 +6,7 @@
 .user-settings-form {
     border-radius: 1rem;
     padding: 1rem;
-    padding-right: 10rem;
+    padding-right: 0rem;
     background-color: var(--background-color-shaded);
 }
 
@@ -17,4 +17,12 @@
 .spacer {
     content: "";
     height: 2rem;
+}
+
+.user-settings-form .property-value {
+    width: 50vw;
+}
+
+.user-settings-view {
+    background: transparent;
 }

@@ -5,7 +5,7 @@ import {
     user3imageBase64
 } from "./userImages"
 
-export default [
+const users = [
     {
         id: 0,
         email: "user1@email.test",
@@ -67,3 +67,5 @@ export default [
         picture: user3imageBase64
     },
 ];
+
+export default users;

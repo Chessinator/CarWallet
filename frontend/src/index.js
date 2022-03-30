@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom"; import Register from './components/Register/'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './redux/store.js';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
-import { BrowserRouter, Routes, Route } from "react-router-dom"; import Register from './components/Register/'
+import './index.css';
 
 import { state } from "./mock";
 import Mock from "./context/Mock";

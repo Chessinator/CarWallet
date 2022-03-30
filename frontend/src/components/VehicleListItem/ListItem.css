@@ -1,6 +1,3 @@
-.list-group-item.active{
-    background-color: coral;
-}
 .image-preview img {
     object-fit: cover;
     width: 100%;

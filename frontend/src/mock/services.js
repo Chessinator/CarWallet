@@ -1,7 +1,7 @@
 import serviceStatus from "./serviceStatus"
 import serviceTypes from "./serviceTypes"
 
-export default {
+const services = {
     byId: {
         1: {
             id: 1,
@@ -31,7 +31,7 @@ export default {
             vehicleId: 7,
             serviceProviderId: 133,
             status: serviceStatus[4742 % serviceStatus.length],
-            dateMeeting: undefined,
+            dateMeeting: new Date(2040, 1, 1, 23, 59, 59),
             dateCompleted: undefined,
             serviceType: serviceTypes[4742 % serviceTypes.length],
             description: "ez",
@@ -84,5 +84,7 @@ export default {
         299: [4, 5],
         301: [2, 6]
     },
-    allIds: [1, 2, 3, 4]
-}
+    allIds: [1, 2, 3, 4, 5, 6]
+};
+
+export default services;
