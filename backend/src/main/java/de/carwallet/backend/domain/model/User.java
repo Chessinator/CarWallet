@@ -22,8 +22,8 @@ public class User {
 
     private String firstname;
     private String lastname;
-    @Transient
-    private Address address;
+  //  @Transient
+   // private Address address;
     private String phone;
     private String pictureBase64;
 

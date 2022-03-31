@@ -26,11 +26,11 @@ public class Vehicle {
     private Date year;
     private String vin;
     private String registrationNumber;
-    private Collection<String> pictureBase64;
+    //private Collection<String> pictureBase64;
     private String description;
 
-    @ManyToOne
-    private User user;
-    @OneToMany
-    private Collection<Service> services = new ArrayList<>();
+//    @ManyToOne
+//    private User user;
+//    @OneToMany
+//    private Collection<Service> services = new ArrayList<>();
 }

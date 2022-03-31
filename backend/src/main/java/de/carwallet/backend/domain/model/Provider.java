@@ -18,7 +18,7 @@ public class Provider {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Address address;
+    //private Address address;
     private String description;
     private String vatNumber;
     private String owner;
