@@ -1,0 +1,9 @@
+.add-vehicle .bi  {
+   height: 150px;
+   transform: scale(5);
+   transform-origin: 50% 0%;
+}
+
+.add-vehicle {
+   overflow: hidden;
+}

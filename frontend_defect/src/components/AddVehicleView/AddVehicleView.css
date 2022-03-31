@@ -1,0 +1,14 @@
+.add-vehicle-view {
+    margin: 1rem;
+    padding: 1rem;
+    
+}
+.add-vehicle-view-form {
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: var(--background-color-shaded);
+}
+
+.add-vehicle-view-form > .row {
+    padding: 1rem;
+}

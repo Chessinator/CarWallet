@@ -1,5 +1,16 @@
-.register {
+.register-form {
     display: flex;
     flex-direction: column;
-    
+    position: absolute;
+    top: 50%; right: 50%;
+    transform: translate(50%,-50%);
+    border-radius: 1rem;
+    padding: 3rem;
+    width: 60%;
+    background: var(--background-color-shaded);
+}
+
+.register-form > * {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }

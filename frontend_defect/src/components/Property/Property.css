@@ -1,0 +1,26 @@
+.property {
+    margin: 3px;
+}
+
+.property-name {
+    text-align: right;
+    color: var(--property-text-label);
+}
+
+.property-value {
+    text-align: left;
+    border: none;
+    border-radius: 0.3rem;
+    margin-right: 1rem;
+    color: var(--property-text-input);
+    background-color: var(--property-background-enabled);
+}
+
+.property-value:disabled {
+    background-color: var(--property-background-disabled);
+}
+
+.property-value::placeholder {
+    color: var(--interactive-placeholder-text);
+    opacity: 0.6;
+}

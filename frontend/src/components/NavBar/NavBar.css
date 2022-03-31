@@ -2,6 +2,7 @@
     min-height: 7vh;
     max-height: 7vh;
     box-shadow: 0 0 1vh 0 black;
+    width: 100vw;
 }
 
 .user-profile-picture {

@@ -2,12 +2,17 @@
     margin: 3px;
 }
 
+.property.error .property-value {
+    border: solid 1px hsla(0, 100%, 50%, 0.5);
+}
+
 .property-name {
     text-align: right;
     color: var(--property-text-label);
 }
 
 .property-value {
+    width: 100%;
     text-align: left;
     border: none;
     border-radius: 0.3rem;
@@ -23,4 +28,23 @@
 .property-value::placeholder {
     color: var(--interactive-placeholder-text);
     opacity: 0.6;
+}
+
+.property-error {
+    font-size: 0.7em;
+    text-align: left;
+    color: rgb(255, 0, 0);
+    overflow: hidden;
+    padding-left: 1rem;
+    max-height: 0px;
+    transition-property: max-height;
+    transition-duration: 2s;
+    transition-timing-function: ease-in;
+}
+
+.property:hover .property-error {
+    max-height: 150px;
+    transition-property: max-height;
+    transition-duration: 2s;
+    transition-timing-function: ease-out;
 }
