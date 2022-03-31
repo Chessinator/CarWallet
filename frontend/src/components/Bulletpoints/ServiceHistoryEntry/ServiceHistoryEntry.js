@@ -12,8 +12,8 @@ const ServiceHistoryEntry = ({ service }) => {
         <div className="bulletpoint-service-history-entry">
             <Property name={"Service Provider"} value={serviceProvider.name} />
             <Property name={"Status"} value={service.status} />
-            <Property name={"Meeting"} value={service.dateMeeting?.toLocaleString()} />
-            <Property name={"Completion"} value={service.dateCompletion?.toLocaleString()} />
+            {service.dateMeeting && <Property name={"Meeting"} value={service.dateMeeting.toLocaleString()} />}
+            {service.dateCompletion && <Property name={"Completion"} value={service.dateCompletion.toLocaleString()} />}
             <Property name={"Servicetype"} value={service.serviceType} />
             <Property name={"Description"} value={service.description} />
             {service.priceEstimation && <Property name={"Estimated price"} value={`${service.priceEstimation} €`} />}

@@ -21,8 +21,14 @@
 
   --gradient-colored-light: linear-gradient(135deg, rgba(0,117,201,1) 0%, rgba(41,156,171,1) 11%, rgba(0,187,255,1) 55%, rgba(255,255,255,1) 100%);
   --gradient-light: linear-gradient(135deg, rgba(205,205,205,1) 0%, rgba(222,222,222,1) 16%, rgba(247,247,247,1) 100%);
+  --gradient-light: linear-gradient(135deg, rgba(73,73,73,0.2007003484987745) 0%, rgba(32,32,32,0.19509810760241597) 80%, rgba(0,0,0,0.20350146894695376) 100%);
 }
 
+html {
+  height: 100vh;
+  width: 100vw;
+  background: var(--gradient-colored-light);
+}
 
 body {
   margin: 0;
@@ -31,7 +37,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--background-color);
 }
 
 code {

@@ -48,6 +48,8 @@ const VehicleDetail = () => {
                 <div className="detail-frame-edit">
                     <button type="button" className="btn btn-light detail-frame-edit-button" onClick={() => setLock(!lock)}> {lock ? <i className="bi bi-lock"></i> : <i className="bi bi-unlock"></i>}Edit data</button>
                     <button type="button" className="btn btn-light detail-frame-picture-button">Edit pictures</button>
+                    {!lock && <button type="button" className="btn btn-light detail-frame-picture-button">Save</button>}
+                    {!lock && <button type="button" className="btn btn-light detail-frame-picture-button">Delete vehicle</button>}
                 </div>
 
             </div>
