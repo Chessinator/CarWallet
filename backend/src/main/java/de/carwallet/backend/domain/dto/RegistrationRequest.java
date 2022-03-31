@@ -1,17 +1,17 @@
 package de.carwallet.backend.domain.dto;
 
-import de.carwallet.backend.domain.model.Address;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
+@AllArgsConstructor
 public class RegistrationRequest {
     private String email;
     private String password;
     private String firstName;
     private String lastName;
-    private Address address;
-    private String phone;
-    private String pictureBase64;
+
 }

@@ -41,11 +41,11 @@ public class AuthController {
         return ResponseEntity.created(uri).body(userService.registerUser(request));
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(HttpServletRequest request, HttpServletResponse response) {
-        // TODO
-        return null;
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(HttpServletRequest request, HttpServletResponse response) {
+//        // TODO
+//        return null;
+//    }
 
     @GetMapping("/refresh-token")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {

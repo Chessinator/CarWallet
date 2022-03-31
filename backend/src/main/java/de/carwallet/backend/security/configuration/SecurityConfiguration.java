@@ -44,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // Set permissions on endpoints
         http.authorizeHttpRequests()
                 // public endpoints do not need to be authenticated
-                .antMatchers("/api/vehicle/**").permitAll()
+                //.antMatchers("/api/vehicle/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
                 // all other endpoints need to be authenticated
                 .anyRequest().authenticated();
