@@ -22,7 +22,7 @@ const RegisterController = () => {
             messages = [...messages, "has at least 8 letters"];
         }
         if (!(/[a-z]/.test(password))) {
-            weakness += 2;
+            weakness += 1;
             messages = [...messages, "has lower case letters"];
         }
         if (!(/[A-Z]/.test(password))) {
@@ -46,10 +46,10 @@ const RegisterController = () => {
         };
     };
 
-    const inputChangeHandler = ({ target: { value, name } }) => {
+    const inputChangeHandler = ({ target: { value, id } }) => {
         const updatedValues = {
             ...values,
-            [name]: value
+            [id]: value
         }
         setValues(updatedValues)
         formValidator(updatedValues)
@@ -74,15 +74,17 @@ const RegisterController = () => {
         } else {
             const firstAt = email.indexOf("@");
             const lastDot = email.lastIndexOf(".");
-            if (firstAt <= 0 || lastDot <= 0 || lastDot < firstAt) {
+            if (firstAt <= 1 || lastDot <= 2 || lastDot < firstAt) {
                 error.email = "Please enter a valid email";
             }
         }
 
         const passwordResult = passwordSecurityCheck(password);
         if (!passwordResult.isValid) {
-            error.password = "Please select a stronger password\n"
-            + passwordResult.messages.map(msg => "- " + msg).join("\n");
+            error.password = {
+                message: "Please select a stronger password",
+                list: passwordResult.messages
+            };
         }
 
         if (password != repassword) {

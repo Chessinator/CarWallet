@@ -1,7 +1,8 @@
 import { useState, useContext } from "react";
 import Mock from "../../context/Mock";
-import "./UserSettings.css";
 import Property from "../Property";
+import CountrySelector from "../CountrySelector";
+import "./UserSettings.css";
 
 const UserSettings = () => {
 
@@ -47,18 +48,19 @@ const UserSettings = () => {
     return <div className="user-settings-view">
         <h2 className="user-settings-header">Change user settings</h2>
         <div className="user-settings-form">
-            <Property name="firstname" value={user.firstname} disabled={false} onChange={onChange}/>
-            <Property name="lastname" value={user.lastname} disabled={false} onChange={onChange}/>
-            <Property name="email" value={user.email} disabled={false} onChange={onChange}/>
-            <Property name="phonenumber" value={user.phonenumber} disabled={false} onChange={onChange}/>
+            <Property name="First name" id="firstname" value={user.firstname} disabled={false} onChange={onChange}/>
+            <Property name="Last name" id="lastname" value={user.lastname} disabled={false} onChange={onChange}/>
+            <Property name="e-Mail" id="email" value={user.email} disabled={true} onChange={onChange}/>
+            <Property name="Phone number" id="phonenumber" value={user.phonenumber} disabled={false} onChange={onChange}/>
             <div className="spacer"> </div>
-            <Property name="address.country" value={user.address.country} disabled={false} onChange={onChange}/>
-            <Property name="address.zip" value={user.address.zip} disabled={false} onChange={onChange}/>
-            <Property name="address.town" value={user.address.town} disabled={false} onChange={onChange}/>
-            <Property name="address.street" value={user.address.street} disabled={false} onChange={onChange}/>
+            <Property name="Country" id="address.country" value={user.address.country} disabled={false} onChange={onChange}/>
+            <Property name="ZIP Code" id="address.zip" value={user.address.zip} disabled={false} onChange={onChange}/>
+            <Property name="Town" id="address.town" value={user.address.town} disabled={false} onChange={onChange}/>
+            <Property name="Street" id="address.street" value={user.address.street} disabled={false} onChange={onChange}/>
             <button className="user-settings-submit btn btn-light" type="submit" onClick={onClick}>
                 Change User Settings
             </button>
+            <CountrySelector />
         </div>
     </div>
 }

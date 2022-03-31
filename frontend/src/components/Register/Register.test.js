@@ -19,32 +19,32 @@ describe("Register", () => {
 
     describe("Form elements", () => {
         it("has firstname", () => {
-            const firstnameInput = wrapper.find('input[name="firstname"]');
-            expect(firstnameInput.prop("name")).toBe("firstname");
+            const firstnameInput = wrapper.find('input[id="firstname"]');
+            expect(firstnameInput.prop("id")).toBe("firstname");
             expect(firstnameInput.prop("type")).toBe("text");
         });
 
         it("has lastname", () => {
-            const lastnameInput = wrapper.find('input[name="lastname"]');
-            expect(lastnameInput.prop("name")).toBe("lastname");
+            const lastnameInput = wrapper.find('input[id="lastname"]');
+            expect(lastnameInput.prop("id")).toBe("lastname");
             expect(lastnameInput.prop("type")).toBe("text");
         });
 
         it("has password", () => {
-            const pwInput = wrapper.find('input[name="password"]');
-            expect(pwInput.prop("name")).toBe("password");
+            const pwInput = wrapper.find('input[id="password"]');
+            expect(pwInput.prop("id")).toBe("password");
             expect(pwInput.prop("type")).toBe("password");
         });
 
         it("has password re-check", () => {
-            const rePwInput = wrapper.find('input[name="repassword"]');
-            expect(rePwInput.prop("name")).toBe("repassword");
+            const rePwInput = wrapper.find('input[id="repassword"]');
+            expect(rePwInput.prop("id")).toBe("repassword");
             expect(rePwInput.prop("type")).toBe("password");
         });
 
         it("has email", () => {
-            const emailInput = wrapper.find('input[name="email"]');
-            expect(emailInput.prop("name")).toBe("email");
+            const emailInput = wrapper.find('input[id="email"]');
+            expect(emailInput.prop("id")).toBe("email");
             expect(emailInput.prop("type")).toBe("email");
         });
 
@@ -59,21 +59,21 @@ describe("Register", () => {
             it("has an error when empty", () => {
                 const submitButton = wrapper.find('button[type="submit"]');
                 submitButton.simulate('click');
-                expect(wrapper.find(".input-error-email").length).toBe(1);
+                expect(wrapper.find(".property-error-email").length).toBe(1);
             });
 
             it("has an error when invalid", () => {
                 const submitButton = wrapper.find('button[type="submit"]');
-                const emailInput = wrapper.find('input[name="email"]');
-                emailInput.simulate('change', { target: { name: "email", value: "invalidMail" }});
-                expect(wrapper.find(".input-error-email").length).toBe(1);
+                const emailInput = wrapper.find('input[id="email"]');
+                emailInput.simulate('change', { target: { id: "email", value: "invalidMail" }});
+                expect(wrapper.find(".property-error-email").length).toBe(1);
             });
     
             it("has no error when valid", () => {
                 const submitButton = wrapper.find('button[type="submit"]');
-                const emailInput = wrapper.find('input[name="email"]');
-                emailInput.simulate('change', { target: { name: "email", value: "email@domain.test" }});
-                expect(wrapper.find(".input-error-email").length).toBe(0);
+                const emailInput = wrapper.find('input[id="email"]');
+                emailInput.simulate('change', { target: { id: "email", value: "email@domain.test" }});
+                expect(wrapper.find(".property-error-email").length).toBe(0);
             });
         });
 
@@ -81,21 +81,21 @@ describe("Register", () => {
             it("has an error when empty", () => {
                 const submitButton = wrapper.find('button[type="submit"]');
                 submitButton.simulate('click');
-                expect(wrapper.find(".input-error-password").length).toBe(1);
+                expect(wrapper.find(".property-error-password").length).toBe(1);
             });
 
             it("has an error when too short", () => {
                 const submitButton = wrapper.find('button[type="submit"]');
-                const passwordInput = wrapper.find('input[name="password"]');
-                passwordInput.simulate('change', { target: { name: "password", value: "pw" }});
-                expect(wrapper.find(".input-error-password").length).toBe(1);
+                const passwordInput = wrapper.find('input[id="password"]');
+                passwordInput.simulate('change', { target: { id: "password", value: "pw" }});
+                expect(wrapper.find(".property-error-password").length).toBe(1);
             });
 
             it("has an error when too weak", () => {
                 const submitButton = wrapper.find('button[type="submit"]');
-                const passwordInput = wrapper.find('input[name="password"]');
-                passwordInput.simulate('change', { target: { name: "password", value: "pwpwpwpw" }});
-                expect(wrapper.find(".input-error-password").length).toBe(1);
+                const passwordInput = wrapper.find('input[id="password"]');
+                passwordInput.simulate('change', { target: { id: "password", value: "pwpwpwpw" }});
+                expect(wrapper.find(".property-error-password").length).toBe(1);
             });
         });
 
@@ -103,7 +103,7 @@ describe("Register", () => {
             it("has an error when empty", () => {
                 const submitButton = wrapper.find('button[type="submit"]');
                 submitButton.simulate('click');
-                expect(wrapper.find(".input-error-firstname").length).toBe(1);
+                expect(wrapper.find(".property-error-firstname").length).toBe(1);
             });
         });
 
@@ -111,7 +111,7 @@ describe("Register", () => {
             it("has an error when empty", () => {
                 const submitButton = wrapper.find('button[type="submit"]');
                 submitButton.simulate('click');
-                expect(wrapper.find(".input-error-lastname").length).toBe(1);
+                expect(wrapper.find(".property-error-lastname").length).toBe(1);
             });
         });
     });

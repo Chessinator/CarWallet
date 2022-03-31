@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import './WelcomePage.css'
 
 
 const WelcomePage = () => {
@@ -10,7 +9,7 @@ const WelcomePage = () => {
 
             <nav className="navbar navbar-expand-lg navbar-light" id="mainNav">
                 <div className="container px-4 px-lg-5">
-                    <a className="navbar-brand" href="index.html">CarWallet</a>
+                    <NavLink className="navbar-brand" href="index.html">CarWallet</NavLink>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         Menu
 
