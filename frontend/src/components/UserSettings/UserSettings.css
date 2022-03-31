@@ -1,6 +1,7 @@
 .user-settings-view {
     margin: 1rem;
     padding: 1rem;
+    max-width: calc(min(80%, 100rem));
 }
 
 .user-settings-form {

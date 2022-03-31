@@ -20,6 +20,8 @@ const VehicleDetail = () => {
     const onChange =() => {
 
     }
+    
+    const propertyRatio = {name: 4, value: 7};
 
     return (
         <div className="bulletpoint-detail-frame">
@@ -37,12 +39,12 @@ const VehicleDetail = () => {
                 </div>
 
                 <div className="detail-frame-properties col-md-6">
-                    <Property name="Make" value={vehicle?.make} disabled={lock} />
-                    <Property name="Model" value={vehicle?.model} disabled={lock} />
-                    <Property name="Year" value={vehicle?.year} disabled={lock} />
-                    <Property name="VIN" value={vehicle?.vin} disabled={lock} />
-                    <Property name="RegNr" value={vehicle?.registerNumber} disabled={lock} />
-                    <Property name="Description" value={vehicle?.description} disabled={lock} />
+                    <Property name="Make" value={vehicle?.make} disabled={lock} ratio={propertyRatio} />
+                    <Property name="Model" value={vehicle?.model} disabled={lock} ratio={propertyRatio} />
+                    <Property name="Year" value={vehicle?.year} disabled={lock} ratio={propertyRatio} />
+                    <Property name="VIN" value={vehicle?.vin} disabled={lock} ratio={propertyRatio} />
+                    <Property name="RegNr" value={vehicle?.registerNumber} disabled={lock} ratio={propertyRatio} />
+                    <Property name="Description" value={vehicle?.description} disabled={lock} ratio={propertyRatio} />
                 </div>
 
                 <div className="detail-frame-edit">
