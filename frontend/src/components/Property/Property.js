@@ -1,9 +1,18 @@
 import "./Property.css";
 
-const Property = ({ id, name, value, disabled = true, onChange, placeholder, error }) =>
+const Property = ({
+    id,
+    name,
+    value,
+    disabled = true,
+    onChange,
+    placeholder,
+    error,
+    ratio = { name: 2, value: 7 }
+}) =>
     <div className={`row property ${error && "error"}`}>
-        <label className="col-md-4 property-name" htmlFor={id ?? name}>{name}: </label>
-        <div className="col-md-7 property-input">
+        <label className={`col-md-${ratio.name} property-name`} htmlFor={id ?? name}>{name}: </label>
+        <div className={`col-md-${ratio.value} property-input`}>
             <input type={getType(id ?? name)} id={id ?? name} value={value} className="row property-value" onChange={onChange} placeholder={placeholder} disabled={disabled} />
             {error && <div className={`row property-error property-error-${id}`}>
                 {error.message ?? error}
