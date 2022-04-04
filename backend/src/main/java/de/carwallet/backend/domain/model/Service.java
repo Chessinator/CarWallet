@@ -1,10 +1,6 @@
 package de.carwallet.backend.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 import javax.persistence.*;
 
 @Entity
@@ -14,17 +10,16 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class Service {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     private Vehicle vehicle;
     @ManyToOne
     private ServiceProvider serviceProvider;
-
     private ServiceType serviceType;
-    private ServiceStatus status;
+    private ServiceStatus serviceStatus;
     private String dateMeeting;
     private String dateCompleted;
     private String description;
@@ -33,5 +28,4 @@ public class Service {
 
     public enum ServiceType {INSPECTION, REPAIR, INSURANCE}
     public enum ServiceStatus {REQUESTED, SUGGESTED, REJECTED, ACCEPTED, WORKING, COMPLETED, CONFLICT, FAILED}
-
 }

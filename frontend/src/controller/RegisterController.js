@@ -1,15 +1,28 @@
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const RegisterController = () => {
 
+
+    const navigate =  useNavigate();
+
     const [values, setValues] = useState(() => ({
-        email: "",
-        password: "",
-        repassword: "",
-        firstname: "",
-        lastname: ""
+        email: "test@test.test",
+        password: "12345qQ!",
+        repassword: "12345qQ!",
+        firstname: "First",
+        lastname: "Last"
     }));
 
+    /*
+        {
+            email: "",
+            password: "",
+            repassword: "",
+            firstname: "",
+            lastname: ""
+        }
+    */
     const [errors, setErrors] = useState({});
 
     const passwordSecurityCheck = password => {
@@ -17,7 +30,7 @@ const RegisterController = () => {
         let weakness = 0;
         const weaknessThreshhold = 2;
 
-        if(password.length < 8) {
+        if (password.length < 8) {
             weakness += 2;
             messages = [...messages, "has at least 8 letters"];
         }
@@ -37,7 +50,7 @@ const RegisterController = () => {
             weakness += 1;
             messages = [...messages, "has special letters"];
         }
-        
+
         return {
             isValid: weakness < weaknessThreshhold,
             weakness,
@@ -58,6 +71,29 @@ const RegisterController = () => {
     const submitHandler = (event) => {
         event.preventDefault()
         formValidator(values)
+
+        if (Object.entries(errors).length !== 0) {
+            return;
+        }
+
+        const body = JSON.stringify({
+            email: values.email,
+            password: values.password,
+            firstname: values.firstname,
+            lastname: values.lastname
+        });
+
+        fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
+            method: "POST",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body
+        })
+            .then(response => response.json())
+            .then(_data => navigate("../login"))
+            .catch(error => console.log("ERROR: ", error))
     }
 
     const formValidator = ({

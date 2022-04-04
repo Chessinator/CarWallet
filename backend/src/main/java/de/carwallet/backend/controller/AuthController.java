@@ -45,14 +45,14 @@ public class AuthController {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         if (authorizationHeader != null && authorizationHeader.startsWith(TokenUtils.getTokenPrefix())) {
             try {
-                String refresh_token = authorizationHeader.substring(TokenUtils.getTokenPrefix().length());
-                String email = TokenUtils.getSubjectFromToken(refresh_token);
+                String refreshToken = authorizationHeader.substring(TokenUtils.getTokenPrefix().length());
+                String email = TokenUtils.getSubjectFromToken(refreshToken);
                 UserDetails user = userService.loadUserByUsername(email);
-                String access_token = TokenUtils.generateAccessToken(user);
+                String accessToken = TokenUtils.generateAccessToken(user);
 
                 Map<String, String> tokens = new HashMap<>();
-                tokens.put("access_token", access_token);
-                tokens.put("refresh_token", refresh_token);
+                tokens.put("access_token", accessToken);
+                tokens.put("refresh_token", refreshToken);
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);

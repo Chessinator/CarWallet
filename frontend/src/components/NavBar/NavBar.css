@@ -15,3 +15,7 @@
 .user-profile {
     text-decoration: none;
 }
+
+.navbar-text {
+    display: flex;
+}

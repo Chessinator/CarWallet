@@ -1,7 +1,6 @@
 package de.carwallet.backend.security.configuration;
 
-import de.carwallet.backend.security.filter.JWTOncePerRequestFilter;
-import de.carwallet.backend.security.filter.JWTUsernamePasswordAuthenticationFilter;
+import de.carwallet.backend.security.filter.*;
 import de.carwallet.backend.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 
 import javax.servlet.http.HttpServletResponse;
-
 
 @Configuration
 @EnableWebSecurity

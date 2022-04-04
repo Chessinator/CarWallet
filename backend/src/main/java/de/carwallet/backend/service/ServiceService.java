@@ -1,5 +1,6 @@
 package de.carwallet.backend.service;
 
+
 import de.carwallet.backend.domain.dto.ServiceCreateRequest;
 import de.carwallet.backend.domain.model.Service;
 import de.carwallet.backend.domain.model.ServiceProvider;
@@ -18,7 +19,9 @@ public class ServiceService {
     private final ServiceRepository serviceRepository;
 
     //CRUD
-    public Service addService(ServiceCreateRequest serviceCreateRequest, ServiceProvider serviceProvider, Vehicle vehicle){
+    public Service addService(ServiceCreateRequest serviceCreateRequest,
+                              ServiceProvider serviceProvider,
+                              Vehicle vehicle){
         Service serviceToAdd = new Service();
         BeanUtils.copyProperties(serviceCreateRequest, serviceToAdd, MappingUtils.getNullPropertyNames(serviceCreateRequest));
         serviceToAdd.setVehicle(vehicle);
@@ -35,11 +38,12 @@ public class ServiceService {
     }
 
     public List<Service> getServices(ServiceProvider serviceProvider){
+
         return serviceRepository.findByServiceProvider(serviceProvider);
     }
 
     // TODO Long id, Service DTO
-    public Service updateService(Long id, Service service){
+    public Service updateService(Long id, Service dtoService) {
         return null;
     }
 }

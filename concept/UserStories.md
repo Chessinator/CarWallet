@@ -371,7 +371,7 @@ As Stephie I want to see the summary of expenses per car
 
 backlog
 
-### User Story 11
+### User Story 13
 As Karl
 I want to see an overview of news and vehicle statuses
 When I visit the front page

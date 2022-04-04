@@ -1,9 +1,11 @@
 package de.carwallet.backend.service;
 
 import de.carwallet.backend.domain.dto.UserRegistrationRequest;
+import de.carwallet.backend.domain.dto.UserUpdateRequest;
 import de.carwallet.backend.domain.model.Role;
 import de.carwallet.backend.domain.model.User;
 import de.carwallet.backend.repository.UserRepository;
+import de.carwallet.backend.utils.MappingUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
@@ -23,6 +25,8 @@ import java.beans.FeatureDescriptor;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
+
+import javax.persistence.EntityNotFoundException;
 
 @Service
 @Transactional
@@ -68,7 +72,13 @@ public class UserService  implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User %s not found", email)));
     }
 
-    public void deleteUser(Long id){
+    public User updateUser(Long id, UserUpdateRequest request){
+        User userToUpdate = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        BeanUtils.copyProperties(request, userToUpdate, MappingUtils.getNullPropertyNames(request));
+        return this.userRepository.save(userToUpdate);
+    }
+
+    public void deleteUser(Long id) {
         User userToDelete = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         userRepository.delete(userToDelete);
     }

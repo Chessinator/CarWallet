@@ -1,12 +1,12 @@
 import users from "./users";
-import vehicles, { vehiclesList } from "./vehicles";
+import vehicles from "./vehicles";
 import serviceTypes from "./serviceTypes"
 import serviceProviders from "./serviceProviders"
 import services from "./services"
 
 
 export const state = {
-    user: users[Math.floor(Math.random() * users.length)],
+    user: Math.random() >= 1.0 ? users[Math.floor(Math.random() * users.length)] : undefined,
     vehicles,
     serviceProviders,
     services

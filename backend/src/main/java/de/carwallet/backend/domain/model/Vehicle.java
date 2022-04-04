@@ -13,9 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Vehicle {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,10 +29,4 @@ public class Vehicle {
 //            inverseJoinColumns = {@JoinColumn(name = "user_id" ,referencedColumnName = "id")})
     @JoinColumn(name = "user_id")
     private User user;
-
-    public Vehicle(String make, String model, int year) {
-        this.make = make;
-        this.model = model;
-        this.year = year;
-    }
 }

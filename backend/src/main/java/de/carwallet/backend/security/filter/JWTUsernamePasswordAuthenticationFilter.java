@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +31,6 @@ public class JWTUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
     public JWTUsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
-        // By default, UsernamePasswordAuthenticationFilter listens to "/login" path.
         this.setFilterProcessesUrl("/api/auth/login");
     }
 
@@ -42,10 +40,8 @@ public class JWTUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-
         UsernamePasswordAuthenticationToken authenticationToken
                 = new UsernamePasswordAuthenticationToken(email, password);
-
         return authenticationManager.authenticate(authenticationToken);
     }
 

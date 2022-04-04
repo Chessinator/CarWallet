@@ -1,7 +1,8 @@
 package de.carwallet.backend.controller;
 
+import java.util.List;
+
 import de.carwallet.backend.domain.dto.ServiceCreateRequest;
-import de.carwallet.backend.domain.model.Service;
 import de.carwallet.backend.domain.model.ServiceProvider;
 import de.carwallet.backend.domain.model.Vehicle;
 import de.carwallet.backend.service.ServiceProviderService;
@@ -10,7 +11,8 @@ import de.carwallet.backend.service.VehicleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+
+import de.carwallet.backend.domain.model.Service;
 
 @RestController
 @RequestMapping("/api/service")

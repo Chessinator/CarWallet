@@ -9,9 +9,9 @@ const CountrySelector = () => {
         fetch("https://restcountries.com/v3.1/all")
             .then(res => res.json())
             .then(json => Object.entries(json).map(
-                ([key, value]) => value.name.common))
-            .then(countries => {console.log("Countries: ", countries); return countries})
-            .then(countries => setCountries(countries));
+                ([_key, value]) => value.name.common))
+            .then(countryNames => {console.log("Countries: ", countryNames); return countryNames})
+            .then(countryNames => setCountries(countryNames));
     }
 
     useEffect(fetchCountries, [])
