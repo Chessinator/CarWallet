@@ -1,36 +1,40 @@
 package de.carwallet.backend.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
+import org.springframework.hateoas.server.core.Relation;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 
 @Entity
 @Table(name = "vehicle")
+@Relation(collectionRelation = "vehicles", itemRelation = "vehicle")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Vehicle {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String make;
     private String model;
-    private Date year;
+    private Integer year;
     private String vin;
     private String registrationNumber;
-    //private Collection<String> pictureBase64;
     private String description;
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinTable(name = "vehicle_user",
+//            joinColumns = {@JoinColumn(name = "vehicle_id", referencedColumnName = "id")},
+//            inverseJoinColumns = {@JoinColumn(name = "user_id" ,referencedColumnName = "id")})
+    @JoinColumn(name = "user_id")
+    private User user;
 
-//    @ManyToOne
-//    private User user;
-//    @OneToMany
-//    private Collection<Service> services = new ArrayList<>();
+    public Vehicle(String make, String model, int year) {
+        this.make = make;
+        this.model = model;
+        this.year = year;
+    }
 }

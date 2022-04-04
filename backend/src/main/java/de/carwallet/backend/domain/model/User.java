@@ -1,35 +1,48 @@
 package de.carwallet.backend.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@ToString
+@JsonIgnoreProperties("vehicles")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(unique = true)
     private String email;
+    @JsonIgnore
     private String password;
+    @ManyToMany
+    private Collection<Role> roles = new ArrayList<>();
 
-    private String firstname;
-    private String lastname;
-  //  @Transient
-   // private Address address;
-    private String phone;
-    private String pictureBase64;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Collection<Vehicle> vehicles = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private Collection<Vehicle> vehicles;
+    public User(long id, String email, String password) {
+    }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> roles;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        User user = (User) o;
+        return id != null && Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

@@ -1,54 +1,90 @@
 package de.carwallet.backend.service;
 
-import de.carwallet.backend.domain.dto.RegistrationRequest;
+import de.carwallet.backend.domain.dto.UserRegistrationRequest;
+import de.carwallet.backend.domain.model.Role;
 import de.carwallet.backend.domain.model.User;
 import de.carwallet.backend.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.beans.FeatureDescriptor;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
-public class UserService {
+@Transactional
+@Slf4j
+public class UserService  implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Lazy
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-    public User registerUser(RegistrationRequest request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
-            request.setPassword("************");
-            throw new RuntimeException(String.format("User already exists %s", request));
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        // Fetch user by email from the DB or throw exception when user does not exist.
+        User fetchedUser = this.userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User %s not found", email)));
+        // Return a UserDetails object using the fetched User information
+        return org.springframework.security.core.userdetails.User
+                .withUsername(fetchedUser.getEmail())
+                .password(fetchedUser.getPassword())
+                .authorities(mapRolesToAuthorities(fetchedUser.getRoles()))
+                .build();
+    }
+
+    public User registerUser(UserRegistrationRequest request) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            request.setPassword("*****");
+            throw new EmailAlreadyExistsException(String.format("User already exists: %s", request));
         }
-
-        User user = new User();
-        BeanUtils.copyProperties(request, user, "password");
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-
-        return userRepository.save(user);
+        User userToCreate = new User();
+        BeanUtils.copyProperties(request, userToCreate, getNullPropertyNames(request));
+        userToCreate.setPassword(passwordEncoder.encode(request.getPassword()));
+        //TODO add default Role to user
+        return userRepository.save(userToCreate);
     }
 
-
-    public User getById(Long id) {
-        return userRepository.getById(id);
+    public User getUser(String email){
+        return this.userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User %s not found", email)));
     }
 
-    public User updateProfile(Long id, User user) {
-        User userToUpdate = userRepository.getById(id);
-        BeanUtils.copyProperties(user, userToUpdate);
-        return userRepository.save(userToUpdate);
+    //UTILS
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
-    public User updatePicture(Long id, String pictureBase64) {
-        User userToUpdate = userRepository.getById(id);
-        userToUpdate.setPictureBase64(pictureBase64);
-        return userRepository.save(userToUpdate);
+    private String[] getNullPropertyNames(Object obj) {
+        final BeanWrapper src = new BeanWrapperImpl(obj);
+        return Arrays.stream(src.getPropertyDescriptors())
+                .map(FeatureDescriptor::getName)
+                .filter(name -> src.getPropertyValue(name) == null)
+                .collect(Collectors.toList())
+                .toArray(String[]::new);
     }
 
-    public void delete(Long id) {
-        userRepository.deleteById(id);
+    // EXCEPTIONS
+    private static class EmailAlreadyExistsException extends RuntimeException {
+        public EmailAlreadyExistsException(String message) {
+            super(message);
+        }
     }
-
 }

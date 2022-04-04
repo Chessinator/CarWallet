@@ -1,15 +1,15 @@
 package de.carwallet.backend.controller;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.carwallet.backend.domain.dto.RegistrationRequest;
+import de.carwallet.backend.domain.dto.UserRegistrationRequest;
 import de.carwallet.backend.domain.model.User;
-import de.carwallet.backend.security.CustomUserDetailsService;
 import de.carwallet.backend.service.UserService;
-import lombok.RequiredArgsConstructor;
+import de.carwallet.backend.utils.TokenUtils;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -17,58 +17,52 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(path = "/api/auth")
-@RequiredArgsConstructor
+@RequestMapping("/api/auth")
 public class AuthController {
 
     private final UserService userService;
-    private final CustomUserDetailsService customUserDetailsService;
-    private final String SECRET_KEY = "REPLACE_THIS_DUMMY_KEY_WITH_SECRET_KEY";
-    private final String TOKEN_PREFIX = "Bearer ";
+
+    @Lazy
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody RegistrationRequest request) {
+    public ResponseEntity<User> registerUser(@RequestBody UserRegistrationRequest request) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/auth/register").toUriString());
         return ResponseEntity.created(uri).body(userService.registerUser(request));
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<?> login(HttpServletRequest request, HttpServletResponse response) {
-//        // TODO
-//        return null;
-//    }
-
-    @GetMapping("/refresh-token")
+    @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
-        if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
+        if (authorizationHeader != null && authorizationHeader.startsWith(TokenUtils.getTokenPrefix())) {
             try {
-                String refresh_token = authorizationHeader.substring(TOKEN_PREFIX.length());
-                DecodedJWT decodedJWT = getDecodedJWT(refresh_token);
-                User user = (User) customUserDetailsService.loadUserByUsername(decodedJWT.getSubject());
-                String access_token = generateToken(user.getEmail(),  10*60*1000L);
+                String refresh_token = authorizationHeader.substring(TokenUtils.getTokenPrefix().length());
+                String email = TokenUtils.getSubjectFromToken(refresh_token);
+                UserDetails user = userService.loadUserByUsername(email);
+                String access_token = TokenUtils.generateAccessToken(user);
 
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("access_token", access_token);
                 tokens.put("refresh_token", refresh_token);
-                response.setContentType(APPLICATION_JSON_VALUE);
-                new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-            } catch (Exception exception){
-                response.setHeader("error" ,exception.getMessage());
-                response.setStatus(FORBIDDEN.value());
+                new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+            } catch (Exception exception) {
                 Map<String, String> error = new HashMap<>();
                 error.put("error_message", exception.getMessage());
-                response.setContentType(APPLICATION_JSON_VALUE);
+                response.setHeader("error", exception.getMessage());
+                response.setStatus(FORBIDDEN.value());
+                response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
+
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
             }
         } else {
@@ -76,16 +70,5 @@ public class AuthController {
         }
     }
 
-    // UTILS
-    private String generateToken(String username, Long expirationTime ){
-        return JWT.create()
-                .withSubject(username)
-                .withIssuedAt(new Date())
-                .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
-                .sign(Algorithm.HMAC256(SECRET_KEY.getBytes()));
-    }
 
-    private DecodedJWT getDecodedJWT(String token){
-        return JWT.require(Algorithm.HMAC256(SECRET_KEY.getBytes())).build().verify(token);
-    }
 }
