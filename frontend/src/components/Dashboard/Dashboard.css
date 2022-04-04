@@ -1,0 +1,21 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.news {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 1rem auto 1rem auto;
+}
+
+.news h1 {
+    text-align: center;
+}
+
+.news ul {
+    list-style: none;
+    text-align: center;
+}

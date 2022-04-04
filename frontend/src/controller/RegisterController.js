@@ -7,13 +7,22 @@ const RegisterController = () => {
     const navigate =  useNavigate();
 
     const [values, setValues] = useState(() => ({
-        email: "",
-        password: "",
-        repassword: "",
-        firstname: "",
-        lastname: ""
+        email: "test@test.test",
+        password: "12345qQ!",
+        repassword: "12345qQ!",
+        firstname: "First",
+        lastname: "Last"
     }));
 
+    /*
+        {
+            email: "",
+            password: "",
+            repassword: "",
+            firstname: "",
+            lastname: ""
+        }
+    */
     const [errors, setErrors] = useState({});
 
     const passwordSecurityCheck = password => {
@@ -74,15 +83,16 @@ const RegisterController = () => {
             lastname: values.lastname
         });
 
-        fetch("http://localhost:8080/api/auth/register", {
+        fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
             method: "POST",
+            mode: "cors",
             headers: {
                 "Content-Type": "application/json"
             },
             body
         })
             .then(response => response.json())
-            .then(data => navigate("/"))
+            .then(_data => navigate("../login"))
             .catch(error => console.log("ERROR: ", error))
     }
 

@@ -1,22 +1,14 @@
 package de.carwallet.backend.service;
 
-
-import de.carwallet.backend.domain.dto.VehicleCreateRequest;
-import de.carwallet.backend.domain.dto.VehicleUpdateRequest;
 import de.carwallet.backend.domain.model.User;
 import de.carwallet.backend.domain.model.Vehicle;
 import de.carwallet.backend.repository.VehicleRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
-import java.beans.FeatureDescriptor;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

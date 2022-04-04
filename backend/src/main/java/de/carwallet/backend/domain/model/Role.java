@@ -1,17 +1,7 @@
 package de.carwallet.backend.domain.model;
 
+import javax.persistence.*;
 import lombok.*;
-import org.hibernate.Hibernate;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import java.util.Objects;
-
-import static javax.persistence.GenerationType.AUTO;
-
 @Entity
 @Table(name = "role")
 @NoArgsConstructor
@@ -20,21 +10,10 @@ import static javax.persistence.GenerationType.AUTO;
 @Setter
 @ToString
 public class Role {
+   
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Role role = (Role) o;
-        return id != null && Objects.equals(id, role.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

@@ -1,11 +1,10 @@
 package de.carwallet.backend.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.Hibernate;
-
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
@@ -19,11 +18,15 @@ import java.util.Objects;
 @ToString
 @JsonIgnoreProperties("vehicles")
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+   
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String email;
     @JsonIgnore
     private String password;
+    
     @ManyToMany
     private Collection<Role> roles = new ArrayList<>();
 
