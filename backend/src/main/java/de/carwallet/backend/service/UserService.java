@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.beans.FeatureDescriptor;
 import java.util.Arrays;
 import java.util.Collection;
@@ -65,6 +66,11 @@ public class UserService  implements UserDetailsService {
     public User getUser(String email){
         return this.userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User %s not found", email)));
+    }
+
+    public void deleteUser(Long id){
+        User userToDelete = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        userRepository.delete(userToDelete);
     }
 
     //UTILS

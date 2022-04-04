@@ -46,7 +46,7 @@ public class VehicleServiceTest {
         Vehicle vehicle = new Vehicle("Volkswagen", "ID.3", 2020);
         // WHEN | ACT
         when(vehicleRepository.save(any(Vehicle.class))).thenReturn(vehicle);
-        Vehicle returnedVehicle = vehicleService.addVehicle(vehicle);
+        Vehicle returnedVehicle = vehicleService.addVehicle(request, new User());
         // THEN | ASSERT
         assertThat(returnedVehicle).isNotNull();
         assertThat(returnedVehicle.getMake()).isEqualTo("Volkswagen");
@@ -90,7 +90,7 @@ public class VehicleServiceTest {
                 user
         );
         // WHEN | ACT
-        when(vehicleRepository.findByUserOrderByIdAsc(any(User.class))).thenReturn(List.of(vehicle));
+        when(vehicleRepository.findByUser(any(User.class))).thenReturn(List.of(vehicle));
         List<Vehicle> vehicleList = vehicleService.getVehicles(user);
         // THEN | ASSERT
         assertThat(vehicleList).isNotNull();
@@ -117,7 +117,7 @@ public class VehicleServiceTest {
         when(vehicleRepository.findById(anyLong())).thenReturn(Optional.of(vehicle));
         vehicle.setModel("ID.4");
         when(vehicleRepository.save(any(Vehicle.class))).thenReturn(vehicle);
-        Vehicle returnedVehicle = vehicleService.updateVehicle(3L, vehicle);
+        Vehicle returnedVehicle = vehicleService.updateVehicle(3L, vehicleDto);
         // THEN | ASSERT
         assertThat(returnedVehicle).isNotNull();
         assertThat(returnedVehicle.getMake()).isNotEqualTo(vehicleDto.getMake());

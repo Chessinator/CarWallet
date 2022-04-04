@@ -1,32 +1,31 @@
 package de.carwallet.backend.service;
 
-
 import de.carwallet.backend.domain.dto.VehicleCreateRequest;
 import de.carwallet.backend.domain.dto.VehicleUpdateRequest;
 import de.carwallet.backend.domain.model.User;
 import de.carwallet.backend.domain.model.Vehicle;
 import de.carwallet.backend.repository.VehicleRepository;
-import lombok.RequiredArgsConstructor;
+import de.carwallet.backend.utils.MappingUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Service;
+
 import javax.persistence.EntityNotFoundException;
-import java.beans.FeatureDescriptor;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class VehicleService {
 
     private final VehicleRepository vehicleRepository;
 
-    //CRUD
-    public Vehicle addVehicle(Vehicle vehicle) {
-         return vehicleRepository.save(vehicle);
+    public VehicleService(VehicleRepository vehicleRepository) {
+        this.vehicleRepository = vehicleRepository;
+    }
+
+    public Vehicle addVehicle(VehicleCreateRequest vehicle, User user) {
+        Vehicle vehicleToAdd = new Vehicle();
+        BeanUtils.copyProperties(vehicle, vehicleToAdd, MappingUtils.getNullPropertyNames(vehicle));
+        vehicleToAdd.setUser(user);
+        return vehicleRepository.save(vehicleToAdd);
     }
 
     public Vehicle getVehicle(Long id) {
@@ -34,20 +33,19 @@ public class VehicleService {
     }
 
     public List<Vehicle> getVehicles(User user) {
-        List<Vehicle> vehicleList = vehicleRepository.findByUserOrderByIdAsc(user);
+        List<Vehicle> vehicleList = vehicleRepository.findByUser(user);
         return vehicleList.isEmpty() ? null : vehicleList;
     }
 
-    public Vehicle updateVehicle(Long id, Vehicle vehicle) {
-        Optional<Vehicle> optionalVehicle = vehicleRepository.findById(id);
-        if (optionalVehicle.isPresent()) {
-            return vehicleRepository.save(vehicle);
-        }
-        return null;
+    public Vehicle updateVehicle(Long id, VehicleUpdateRequest vehicle) {
+        Vehicle vehicleToUpdate = vehicleRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        BeanUtils.copyProperties(vehicle, vehicleToUpdate, MappingUtils.getNullPropertyNames(vehicle));
+        return vehicleRepository.save(vehicleToUpdate);
     }
 
     public void deleteVehicle(Long id) {
         Vehicle vehicleToDelete = vehicleRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         vehicleRepository.delete(vehicleToDelete);
+
     }
 }
