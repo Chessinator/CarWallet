@@ -26,7 +26,8 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    
+
+    //CRUD
     @GetMapping
     public ResponseEntity<User> getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -34,8 +35,7 @@ public class UserController {
             return ResponseEntity.noContent().build();
         }
         try {
-            String email = authentication.getName();
-            return ResponseEntity.ok(userService.getUser(email));
+            return ResponseEntity.ok(userService.getUser(authentication.getName()));
         } catch (EntityNotFoundException exception) {
             return ResponseEntity.noContent().build();
         }

@@ -12,7 +12,6 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
@@ -31,6 +30,12 @@ public class VehicleController {
         this.userService = userService;
     }
 
+    @PostMapping
+    public ResponseEntity<Vehicle> addVehicle(@RequestBody VehicleCreateRequest request) {
+        User currentUser = getCurrentUser();
+        return ResponseEntity.ok(vehicleService.addVehicle(request, currentUser));
+    }
+
     @GetMapping
     public ResponseEntity<?> getVehicles(@RequestParam(required = false) Long id){
         User currentUser = getCurrentUser();
@@ -41,12 +46,6 @@ public class VehicleController {
         return vehicleList.isEmpty()
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(CollectionModel.of(vehicleList));
-    }
-
-    @PostMapping
-    public ResponseEntity<Vehicle> addVehicle(@RequestBody VehicleCreateRequest request) {
-        User currentUser = getCurrentUser();
-        return ResponseEntity.ok(vehicleService.addVehicle(request, currentUser));
     }
 
     @PatchMapping

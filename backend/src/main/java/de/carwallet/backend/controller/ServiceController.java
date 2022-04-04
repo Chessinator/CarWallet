@@ -4,7 +4,9 @@ import java.util.List;
 
 import de.carwallet.backend.domain.dto.ServiceCreateRequest;
 import de.carwallet.backend.domain.model.ServiceProvider;
+import de.carwallet.backend.domain.model.ServiceType;
 import de.carwallet.backend.domain.model.Vehicle;
+import de.carwallet.backend.repository.ServiceProviderRepository;
 import de.carwallet.backend.service.ServiceProviderService;
 import de.carwallet.backend.service.ServiceService;
 import de.carwallet.backend.service.VehicleService;
@@ -22,10 +24,11 @@ public class ServiceController {
     private final ServiceService serviceService;
     private final VehicleService vehicleService;
     private final ServiceProviderService serviceProviderService;
+    private final ServiceProviderRepository serviceProviderRepository;
 
     // CRUD
     @PostMapping
-    public ResponseEntity<Service> createService(@RequestBody ServiceCreateRequest request){
+    public ResponseEntity<Service> addService(@RequestBody ServiceCreateRequest request){
         Vehicle vehicle = vehicleService.getVehicle(request.getVehicleId());
         ServiceProvider serviceProvider = serviceProviderService.getServiceProvider(request.getServiceProviderId());
         if (vehicle == null || serviceProvider == null){
@@ -44,14 +47,18 @@ public class ServiceController {
         return null;
     }
 
+
     @GetMapping("/provider/{id}")
     public ResponseEntity<ServiceProvider> getProvider(@PathVariable Long id){
         return null;
     }
 
-    @GetMapping("/provider/{serviceType}")
-    public ResponseEntity<List<ServiceProvider>> getProviders(@PathVariable String serviceType){
-        return null;
+    @GetMapping("/provider")
+    public ResponseEntity<List<ServiceProvider>> getServiceProviders(@RequestParam("service_type") ServiceType serviceType){
+        List<ServiceProvider> serviceProviderList = serviceProviderService.getServiceProviders(serviceType);
+        return serviceProviderList.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(serviceProviderList);
     }
 
 }
