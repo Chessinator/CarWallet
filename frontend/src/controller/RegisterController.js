@@ -1,6 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const RegisterController = () => {
+
+
+    const navigate =  useNavigate();
 
     const [values, setValues] = useState(() => ({
         email: "",
@@ -17,7 +21,7 @@ const RegisterController = () => {
         let weakness = 0;
         const weaknessThreshhold = 2;
 
-        if(password.length < 8) {
+        if (password.length < 8) {
             weakness += 2;
             messages = [...messages, "has at least 8 letters"];
         }
@@ -37,7 +41,7 @@ const RegisterController = () => {
             weakness += 1;
             messages = [...messages, "has special letters"];
         }
-        
+
         return {
             isValid: weakness < weaknessThreshhold,
             weakness,
@@ -58,6 +62,28 @@ const RegisterController = () => {
     const submitHandler = (event) => {
         event.preventDefault()
         formValidator(values)
+
+        if (Object.entries(errors).length !== 0) {
+            return;
+        }
+
+        const body = JSON.stringify({
+            email: values.email,
+            password: values.password,
+            firstname: values.firstname,
+            lastname: values.lastname
+        });
+
+        fetch("http://localhost:8080/api/auth/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body
+        })
+            .then(response => response.json())
+            .then(data => navigate("/"))
+            .catch(error => console.log("ERROR: ", error))
     }
 
     const formValidator = ({
