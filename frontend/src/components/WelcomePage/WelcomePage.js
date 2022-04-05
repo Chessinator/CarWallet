@@ -2,8 +2,6 @@ import { NavLink } from "react-router-dom";
 import "./WelcomePage.css"
 
 const WelcomePage = () => {
-
-
     return (
         <div className="welcome-page">
             <div className="container px-4 px-lg-5">
