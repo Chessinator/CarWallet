@@ -1,0 +1,36 @@
+var loginHeader = new Headers();
+loginHeader.append("Content-Type", "application/x-www-form-urlencoded");
+
+var urlencoded = new URLSearchParams();
+urlencoded.append("email", email);
+urlencoded.append("password", password);
+
+var loginRequest = {
+    method: 'POST',
+    headers: loginHeader,
+    body: urlencoded,
+    redirect: 'follow'
+};
+
+fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, loginRequest)
+    .then(response => response.json())
+    .then(data => mock.token = {
+        access: data.access_token,
+        refresh: data.refresh_token
+    })
+    .then(() => {
+        fetch(`${process.env.REACT_APP_API_URL}/api/user`, {
+            method: 'GET',
+            headers: {
+                "Authorization": `Bearer ${mock.token.access}`
+            },
+            redirect: 'follow'
+        })
+        .then(res => res.json())
+        .then(user => mock = {...mock, user})
+        .then(_ => console.log("mock: ", mock))
+        .catch(error => console.log("ERROR USER FETCH: ", error))
+    })
+    .then(_data => navigate("../dashboard"))
+    .catch(error => console.log("ERROR USER LOGIN: ", error));
+}

@@ -1,45 +1,24 @@
 import { useState, useContext } from 'react'
 import { useNavigate } from "react-router-dom";
-import Mock from "../../Mock";
+import {useDispatch} from 'react-redux';
+import Mock from "../../context/Mock";
 import './Login.css';
+import { userLogin } from '../../redux/action/user/User';
 
 const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const mock = useContext(Mock);
-
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const attemptLogin = (event) => {
+    const attemptLogin =  (event) => {
         event.preventDefault();
-
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-        var urlencoded = new URLSearchParams();
-        urlencoded.append("email", email);
-        urlencoded.append("password", password);
-
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: urlencoded,
-            redirect: 'follow'
-        };
-
-        fetch("http://localhost:8080/api/auth/login", requestOptions)
-            .then(response => response.text())
-            .then(data => console.log("Data: ", data))
-            .then(data => mock.token = {
-                access: data.access_token,
-                refresh: data.refresh_token
-            })
-            .then(_data => console.log("token: ", mock.token))
-            .then(_data => navigate("../dashboard"))
-            .catch(error => console.log("ERROR: ", error));
-    }
+        
+        dispatch(userLogin({email: email,password: password}));
+        // state?.user && navigate("../");
+    }  
 
     return (
         <div className="text-center">
@@ -66,5 +45,6 @@ const Login = () => {
             </form>
         </div>
     )
-}
+};
+
 export default Login;

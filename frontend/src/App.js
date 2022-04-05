@@ -19,9 +19,7 @@ function App() {
   const user = mock.user;
 
   return (
-
     <div className="App">
-
       <NavBar />
       <Routes>
         <Route path="/" exact element={<WelcomePage />} />
@@ -40,11 +38,7 @@ function App() {
         </Route>
         <Route element={<ProtectedRoute user={user} />}>
           <Route path="/userSettings" element={<UserSettings />} />
-
         </Route>
-
-
-
       </Routes>
     </div>
   );

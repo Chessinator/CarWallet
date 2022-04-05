@@ -1,6 +1,8 @@
 import {
     UPDATE_USER_DETAILS,
-    UPLOAD_USER_PICTURE
+    UPLOAD_USER_PICTURE,
+    USER_LOGIN,
+    FETCH_USER_DETAILS
 } from '../../action/user/User.js'
 
 /*
@@ -21,54 +23,19 @@ import {
     },
 */
 
-export const DEFAULT_USER = (state) => ({
-    id: -1,
-    email: "",
-    token: undefined,
-    firstname: "",
-    lastname: "",
-    address: {
-        country: "",
-        town: "",
-        zip: "",
-        street: ""
-    },
-    phonenumber: "",
-    picture: undefined
-});
-
-const getUserDetails = ({
-    firstname,
-    lastname,
-    address: {
-        country,
-        town,
-        zip,
-        street
-    },
-    phonenumber
-}) => {
-    const details = {
-        firstname,
-        lastname,
-        address: {
-            country,
-            town,
-            zip,
-            street
-        },
-        phonenumber
-    };
-    return details;
-}
-
 export default (
     state = [],
     action = {}
 ) => {
     switch (action.type) {
+        case USER_LOGIN:
+            return {...state, user: action.payload.user}
+
+        case FETCH_USER_DETAILS:
+            return {...state, user: action.payload};
+            
         case UPDATE_USER_DETAILS:
-            return {...state, ...action.payload.user};
+            return {...state, ...action.payload};
 
         case UPLOAD_USER_PICTURE:
             return {
