@@ -1,14 +1,15 @@
 package de.carwallet.backend.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
-import org.springframework.hateoas.server.core.Relation;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Table(name = "vehicle")
-@Relation(collectionRelation = "vehicles", itemRelation = "vehicle")
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties({"user"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -24,9 +25,9 @@ public class Vehicle {
     private String registrationNumber;
     private String description;
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinTable(name = "vehicle_user",
-//            joinColumns = {@JoinColumn(name = "vehicle_id", referencedColumnName = "id")},
-//            inverseJoinColumns = {@JoinColumn(name = "user_id" ,referencedColumnName = "id")})
     @JoinColumn(name = "user_id")
     private User user;
+//    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
+//    private Collection<Service> services = new ArrayList<>();
+
 }

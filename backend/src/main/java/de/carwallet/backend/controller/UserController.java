@@ -1,20 +1,16 @@
 package de.carwallet.backend.controller;
 
-import javax.persistence.EntityNotFoundException;
-
+import de.carwallet.backend.domain.dto.UserUpdateRequest;
+import de.carwallet.backend.domain.model.User;
+import de.carwallet.backend.service.UserService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import de.carwallet.backend.domain.model.User;
-import de.carwallet.backend.service.UserService;
+import javax.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/api/user")
@@ -27,42 +23,54 @@ public class UserController {
         this.userService = userService;
     }
 
-    //CRUD
     @GetMapping
     public ResponseEntity<User> getUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication instanceof AnonymousAuthenticationToken) {
+        String email = getEmailOfAuthenticatedUser();
+        if (email == null) {
             return ResponseEntity.noContent().build();
         }
         try {
-            return ResponseEntity.ok(userService.getUser(authentication.getName()));
+            return ResponseEntity.ok(userService.getUser(email));
         } catch (EntityNotFoundException exception) {
             return ResponseEntity.noContent().build();
         }
     }
 
-//    @PatchMapping
-//    public ResponseEntity<User> updateUser(@RequestBody UserUpdateRequest request) {
-//
-//    }
+    @PatchMapping
+    public ResponseEntity<User> updateUser(@RequestBody UserUpdateRequest request) {
+        String email = getEmailOfAuthenticatedUser();
+        if (email == null) {
+            return ResponseEntity.noContent().build();
+        }
+        try {
+            return ResponseEntity.ok(userService.updateUser(email, request));
+        } catch (EntityNotFoundException exception) {
+            return ResponseEntity.noContent().build();
+        }
+    }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteUser(@RequestParam Long id){
+    public ResponseEntity<?> deleteUser() {
+        String email = getEmailOfAuthenticatedUser();
+        if (email == null) {
+            return ResponseEntity.noContent().build();
+        }
         try {
-            userService.deleteUser(id);
+            SecurityContextHolder.clearContext();
+            userService.deleteUser(email);
             return ResponseEntity.accepted().build();
         } catch (EntityNotFoundException exception) {
             return ResponseEntity.noContent().build();
         }
     }
 
-
-
-//     READ: / (read user data)
-//     DELETE: / (user deletion)
-//     UPDATE: profile/ (change in user details i.e. firstname)
-//     UPDATE: picture/
-//     DELETE: picture/
-
+    // UTILS
+    private String getEmailOfAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            return authentication.getName();
+        }
+        return null;
+    }
 
 }

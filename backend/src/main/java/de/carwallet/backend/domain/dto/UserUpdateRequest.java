@@ -11,5 +11,7 @@ public class UserUpdateRequest {
     private String firstname;
     private String lastname;
     private String address;
-    private String phoneNumber;
+    private String phone;
+    private String pictureBase64;
+
 }

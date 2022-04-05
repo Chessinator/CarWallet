@@ -13,10 +13,15 @@ public class Service {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column()
     private Long id;
+
+
     @ManyToOne
+    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
     @ManyToOne
+    @JoinColumn(name = "service_provider_id")
     private ServiceProvider serviceProvider;
     private ServiceType serviceType;
     private ServiceStatus serviceStatus;

@@ -6,7 +6,6 @@ import de.carwallet.backend.domain.model.User;
 import de.carwallet.backend.domain.model.Vehicle;
 import de.carwallet.backend.service.UserService;
 import de.carwallet.backend.service.VehicleService;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -45,7 +44,7 @@ public class VehicleController {
         }
         return vehicleList.isEmpty()
                 ? ResponseEntity.noContent().build()
-                : ResponseEntity.ok(CollectionModel.of(vehicleList));
+                : ResponseEntity.ok(vehicleList);
     }
 
     @PatchMapping

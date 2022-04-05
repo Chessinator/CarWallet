@@ -19,8 +19,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
-    @JsonIgnore
     private String password;
+    private String firstname;
+    private String lastname;
+    private String address;
+    private String phone;
+    private String pictureBase64;
     @ManyToMany
     private Collection<Role> roles = new ArrayList<>();
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

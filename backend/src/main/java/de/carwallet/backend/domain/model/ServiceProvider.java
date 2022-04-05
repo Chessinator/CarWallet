@@ -20,10 +20,11 @@ public class ServiceProvider {
     private String description;
     private String vatNumber;
     private String owner;
-
     @ElementCollection(targetClass = ServiceType.class)
     @CollectionTable
     @Enumerated(EnumType.STRING)
     private Collection<ServiceType> serviceTypes = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY)
+    private Collection<Service> services = new ArrayList<>();
 }
 
