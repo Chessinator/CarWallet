@@ -3,6 +3,8 @@ package de.carwallet.backend.domain.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Table(name = "vehicle")
@@ -21,10 +23,15 @@ public class Vehicle {
     private String vin;
     private String registrationNumber;
     private String description;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-//    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
-//    private Collection<Service> services = new ArrayList<>();
+
+    @OneToMany(targetEntity = Service.class,
+            mappedBy = "serviceProvider",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Collection<Service> services = new ArrayList<>();
 
 }

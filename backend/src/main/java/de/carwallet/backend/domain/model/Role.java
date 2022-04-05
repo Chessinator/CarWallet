@@ -8,7 +8,6 @@ import lombok.*;
 @Entity
 @Table(name = "role")
 @JsonIgnoreProperties({"id"})
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

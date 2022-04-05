@@ -6,6 +6,7 @@ import de.carwallet.backend.domain.model.User;
 import de.carwallet.backend.domain.model.Vehicle;
 import de.carwallet.backend.service.UserService;
 import de.carwallet.backend.service.VehicleService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -32,14 +33,20 @@ public class VehicleController {
     @PostMapping
     public ResponseEntity<Vehicle> addVehicle(@RequestBody VehicleCreateRequest request) {
         User currentUser = getCurrentUser();
+        if (currentUser == null){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return ResponseEntity.ok(vehicleService.addVehicle(request, currentUser));
     }
 
     @GetMapping
-    public ResponseEntity<?> getVehicles(@RequestParam(required = false) Long id){
+    public ResponseEntity<?> getVehicles(@RequestParam(value = "vehicle_id", required = false) Long id) {
         User currentUser = getCurrentUser();
+        if (currentUser == null){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+        }
         List<Vehicle> vehicleList = vehicleService.getVehicles(currentUser);
-        if (id != null){
+        if (id != null) {
             vehicleList = vehicleList.stream().filter(vehicle -> Objects.equals(vehicle.getId(), id)).collect(Collectors.toList());
         }
         return vehicleList.isEmpty()
@@ -48,7 +55,8 @@ public class VehicleController {
     }
 
     @PatchMapping
-    public ResponseEntity<Vehicle> updateVehicle(@RequestParam Long id, @RequestBody VehicleUpdateRequest request) {
+    public ResponseEntity<Vehicle> updateVehicle(@RequestParam(value = "vehicle_id", required = true) Long id,
+                                                 @RequestBody VehicleUpdateRequest request) {
         try {
             return ResponseEntity.ok(vehicleService.updateVehicle(id, request));
         } catch (EntityNotFoundException exception) {
@@ -57,7 +65,7 @@ public class VehicleController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteVehicle(@RequestParam Long id) {
+    public ResponseEntity<?> deleteVehicle(@RequestParam(value = "vehicle_id", required = true) Long id) {
         try {
             vehicleService.deleteVehicle(id);
             return ResponseEntity.accepted().build();

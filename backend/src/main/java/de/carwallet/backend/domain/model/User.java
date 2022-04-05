@@ -17,6 +17,7 @@ public class User {
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String email;
     private String password;
     private String firstname;
@@ -25,8 +26,13 @@ public class User {
     private String phone;
     @Column(length = 5000)
     private String pictureBase64;
+
     @ManyToMany
     private Collection<Role> roles = new ArrayList<>();
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+
+    @OneToMany(targetEntity = Vehicle.class,
+            mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     private Collection<Vehicle> vehicles = new ArrayList<>();
 }

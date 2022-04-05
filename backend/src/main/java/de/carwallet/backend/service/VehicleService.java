@@ -30,7 +30,7 @@ public class VehicleService {
     }
 
     public Vehicle getVehicle(Long id) {
-        return vehicleRepository.findById(id).orElse(null);
+        return vehicleRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public List<Vehicle> getVehicles(User user) {
