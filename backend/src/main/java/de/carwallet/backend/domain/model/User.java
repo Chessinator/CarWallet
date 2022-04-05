@@ -2,7 +2,6 @@ package de.carwallet.backend.domain.model;
 
 import lombok.*;
 import javax.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,6 +23,7 @@ public class User {
     private String lastname;
     private String address;
     private String phone;
+    @Column(length = 5000)
     private String pictureBase64;
     @ManyToMany
     private Collection<Role> roles = new ArrayList<>();
