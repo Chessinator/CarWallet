@@ -1,9 +1,9 @@
 import { useState, useContext } from 'react'
 import { useNavigate } from "react-router-dom";
-import {useDispatch} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import Mock from "../../context/Mock";
 import './Login.css';
-import { userLogin } from '../../redux/action/user/User';
+import {  userLogin } from '../../redux/action/user/User';
 
 const Login = () => {
 
@@ -12,12 +12,12 @@ const Login = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const userState = useSelector(state => state.user)
 
-    const attemptLogin =  (event) => {
-        event.preventDefault();
-        
-        dispatch(userLogin({email: email,password: password}));
-        // state?.user && navigate("../");
+    const attemptLogin =  async (event) => {
+        event.preventDefault(); 
+        await dispatch(userLogin({email: email,password: password}));
+        // userState.details && navigate("../dashboard") 
     }  
 
     return (
@@ -46,5 +46,8 @@ const Login = () => {
         </div>
     )
 };
+
+
+
 
 export default Login;

@@ -5,6 +5,7 @@ export const UPDATE_USER_DETAILS = "update_user_details";
 export const UPLOAD_USER_PICTURE = "upload_user_picture";
 export const USER_LOGIN = "user_login";
 export const FETCH_USER_DETAILS = "fetch_user_details";
+export const LOGOUT_USER = "logout_user";
 
 
 const url = `${process.env.REACT_APP_API_URL}/api/user`;
@@ -28,22 +29,17 @@ export const userLogin = ({ email, password }) => {
 
         fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, loginRequest)
             .then(response => response.json())
-            .then(json => { console.log("json: ", json); return json })
             .then(data => ({
                 access: data.access_token,
                 refresh: data.refresh_token
             }))
-            /*.then(token => setToken(token))*/
-            .then(token => fetchUserDetails({ token }).dispatch)
-            /*.then(_data => navigate("../dashboard"))*/
+            .then(token => dispatch(fetchUserDetails({ token })))
             .catch(error => console.log("ERROR USER LOGIN: ", error));
     }
 }
 
 export const fetchUserDetails = ({ token }) => {
-    console.log("fetch user details triggered with token 1:", token)
     return async dispatch => {
-        console.log("fetch user details triggered with token 2:", token)
         fetch(`${process.env.REACT_APP_API_URL}/api/user`, {
             method: 'GET',
             headers: {
@@ -51,12 +47,10 @@ export const fetchUserDetails = ({ token }) => {
             },
             redirect: 'follow'
         })
-            .then(res => { console.log("res: ", res); return res })
             .then(res => res.json())
-            .then(user => { console.log("userdetails:", user); return user })
             .then(user => dispatch({
                 type: FETCH_USER_DETAILS,
-                payload: user
+                payload: {token: token, user: user}
             }))
             .catch(error => console.log("ERROR USER FETCH: ", error))
     }
@@ -65,27 +59,31 @@ export const fetchUserDetails = ({ token }) => {
 
 export const updateUserDetails = user => {
     return async dispatch => {
-        asyncDispatch({
-            content: user,
-            method: "POST",
-            url,
-            type: UPDATE_USER_DETAILS,
-            payload: { user }
-        });
-    };
+        const { token, details } = user;
+        fetch(`${process.env.REACT_APP_API_URL}/api/user`, {
+            method: 'PATCH',
+            headers: {
+                "Authorization": `Bearer ${token.access}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(details),
+            mode: "cors",
+            redirect: 'follow',
+        })
+            .then(res => res.json())
+            .then(userDetails => dispatch({
+                type: UPDATE_USER_DETAILS,
+                payload: {token: token, details: userDetails}
+            }))
+            .catch(error => console.log("ERROR USER FETCH: ", error))
+    }
 };
 
-export const uploadUserPicture = (user, picture) => {
-    return async dispatch => {
-        asyncDispatch({
-            content: {
-                userid: user.id,
-                picture
-            },
-            method: "POST",
-            url,
-            type: UPLOAD_USER_PICTURE,
-            payload: { user, picture }
-        });
-    };
-};
+export const userLogout = () => {
+    return async dispatch =>{
+        fetch(`${process.env.REACT_APP_API_URL}/logout`)
+        .then(() => dispatch({
+            type: LOGOUT_USER
+        }));
+    }
+}

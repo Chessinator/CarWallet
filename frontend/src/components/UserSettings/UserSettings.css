@@ -15,15 +15,17 @@
     margin: 1rem;
 }
 
-.spacer {
-    content: "";
-    height: 2rem;
-}
-
 .user-settings-form .property-value {
     width: 50vw;
 }
 
-.user-settings-view {
-    background: transparent;
+.profile-picture-container > label {
+    text-align: right;
+}
+
+.profile-picture-container > input {
+    text-align: left;
+    border: none;
+    border-radius: 0.3rem;
+    margin-right: 1rem;
 }

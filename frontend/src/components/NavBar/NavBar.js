@@ -2,11 +2,15 @@ import React, { useContext } from "react";
 import { NavLink } from 'react-router-dom'
 import "./NavBar.css"
 import Mock from "../../context/Mock";
+import { useSelector, useDispatch } from "react-redux";
+import { userLogout } from "../../redux/action/user/User";
 
 const NavBar = () => {
 
+    const userState = useSelector(state => state.user)
     const mock = useContext(Mock);
-    const user = mock.user;
+    const user = userState?.details;
+    const dispatch = useDispatch();
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -31,13 +35,16 @@ const NavBar = () => {
 
                     <span className="navbar-text">
                         {user &&
-                            <NavLink className="user-profile" to="/userSettings">{`${mock.user.firstname} ${mock.user.lastname}`}
-                                <img className="user-profile-picture" src={mock.user.picture} /></NavLink>
+                            <>
+                                <button className="logout-button nav-button" onClick={() => dispatch(userLogout())}>Logout</button>
+                                <NavLink className="user-profile nav-button" to="/userSettings">{`${user.firstname} ${user.lastname}`}
+                                    <img className="user-profile-picture" src={user.picture ?? user.pictureBase64} /></NavLink>
+                            </>
                         }
                         {!user &&
                             <>
-                                <NavLink className="nav-link" to="/login">Login</NavLink>
-                                <NavLink className="nav-link" to="/register">Sign Up</NavLink>
+                                <NavLink className="nav-link nav-button" to="/login">Login</NavLink>
+                                <NavLink className="nav-link nav-button" to="/register">Sign Up</NavLink>
                             </>
                         }
                     </span>

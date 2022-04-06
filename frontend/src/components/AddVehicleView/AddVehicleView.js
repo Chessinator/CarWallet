@@ -1,13 +1,20 @@
 import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux";
+import { addVehicle } from "../../redux/action/vehicle/Vehicle";
 import "./AddVehicleView.css"
 
 const AddVehicleView = () => {
 
+    const dispatch = useDispatch();
+    const tokenState = useSelector(state => state.user.token.access);
+
     const [vehicle, setVehicle] = useState({
         make: "",
         model: "",
+        year: undefined,
         vin: "",
-        registerNumber: ""
+        registrationNumber: "",
+        description: ""
     });
 
     const onChange = ({ target: { value, id } }) => {
@@ -19,6 +26,7 @@ const AddVehicleView = () => {
 
     const onClick = () => {
         console.log("vehicle:", vehicle); // ADD REDUX ACTION
+        dispatch(addVehicle({ vehicle, token: tokenState }));
     }
 
     return <div className="add-vehicle-view">
@@ -69,14 +77,14 @@ const AddVehicleView = () => {
             <div className="row">
                 <label
                     className="col-md-3 property-name"
-                    htmlFor="registerNumber">
+                    htmlFor="registrationNumber">
                     RegNum:
                 </label>
                 <input
                     className="col-md-9 property-value"
                     type="text"
-                    id="registerNumber"
-                    value={vehicle.registerNumber}
+                    id="registrationNumber"
+                    value={vehicle.registrationNumber}
                     placeholder="Please add a registration number"
                     onChange={onChange}/>
             </div>

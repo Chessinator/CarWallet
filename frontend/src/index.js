@@ -15,7 +15,7 @@ import Mock from "./context/Mock";
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Provider store={store}>
+      <Provider store={ store }>
         <Mock.Provider value={state}>
           <App />
         </Mock.Provider>

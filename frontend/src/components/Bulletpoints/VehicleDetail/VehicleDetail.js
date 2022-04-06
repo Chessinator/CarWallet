@@ -1,23 +1,23 @@
 import React, { useContext, useState } from "react";
-import './VehicleDetail.css'
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { vehiclesList } from '../../../mock/vehicles';
 import { useParams } from 'react-router-dom';
-import Mock from "../../../context/Mock";
 import Property from "../../Property"
+import { useSelector } from "react-redux";
 import '../../../../node_modules/bootstrap-icons/font/bootstrap-icons.css'
+import './VehicleDetail.css'
 
 
 const VehicleDetail = () => {
     const { vehicleId } = useParams();
-    const mock = useContext(Mock);
-    const vehicle = mock.vehicles.byId[vehicleId];
-    const imgSource = vehicle?.pictures ?? [];
+    const vehicles = useSelector(state => state.vehicles);
+    const vehicle = vehicles.byId[vehicleId];
+    const imgSource = vehicle.pictures ?? [];
 
     const [lock, setLock] = useState(true);
+    const [editedVehicle, setEditedVehicle] = useState(vehicle);
 
-    const onChange =() => {
+    const onChange = () => {
 
     }
     
@@ -39,12 +39,12 @@ const VehicleDetail = () => {
                 </div>
 
                 <div className="detail-frame-properties col-md-6">
-                    <Property name="Make" value={vehicle?.make} disabled={lock} ratio={propertyRatio} />
-                    <Property name="Model" value={vehicle?.model} disabled={lock} ratio={propertyRatio} />
-                    <Property name="Year" value={vehicle?.year} disabled={lock} ratio={propertyRatio} />
-                    <Property name="VIN" value={vehicle?.vin} disabled={lock} ratio={propertyRatio} />
-                    <Property name="RegNr" value={vehicle?.registerNumber} disabled={lock} ratio={propertyRatio} />
-                    <Property name="Description" value={vehicle?.description} disabled={lock} ratio={propertyRatio} />
+                    <Property name="Make" value={editedVehicle.make} disabled={lock} onChange={onChange} ratio={propertyRatio} />
+                    <Property name="Model" value={editedVehicle.model} disabled={lock} onChange={onChange} ratio={propertyRatio} />
+                    <Property name="Year" value={editedVehicle.year} disabled={lock} onChange={onChange} ratio={propertyRatio} />
+                    <Property name="VIN" value={editedVehicle.vin} disabled={lock} onChange={onChange} ratio={propertyRatio} />
+                    <Property name="RegNr" value={editedVehicle.registerNumber} disabled={lock} onChange={onChange} ratio={propertyRatio} />
+                    <Property name="Description" value={editedVehicle.description} disabled={lock} onChange={onChange} ratio={propertyRatio} />
                 </div>
 
                 <div className="detail-frame-edit">

@@ -1,11 +1,51 @@
-import {asyncDispatch} from "../../api";
 export const ADD_VEHICLE = "ADD_VEHICLE";
 export const DELETE_VEHICLE = "DELETE_VEHICLE";
 export const PATCH_VEHICLE = "PATCH_VEHICLE";
+export const ADD_VEHICLES = "ADD_VEHICLES";
 
-export const addVehicle = (vehicle) => {
+export const addVehicle = ({vehicle, token}) => {
 
-    asyncDispatch({content: vehicle, method:"POST", url:"http://localhost:8080/api/vehicle/", type: ADD_VEHICLE })
+    return async dispatch => {
+        const addMethod = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(vehicle)   
+        }
+
+        await fetch("http://localhost:8080/api/vehicle/", addMethod)
+            .then(response => {console.log("ADD_RESPONSE: ", response); return response})
+            .then(response => response.json())
+          
+            .then(vehicleToAdd => dispatch({
+                type: ADD_VEHICLE,
+                payload: vehicleToAdd
+            }));
+    }
+}
+
+export const fetchVehicles = ({ token }) => {
+    return async dispatch => {
+
+        const getVehicles = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }
+
+        await fetch("http://localhost:8080/api/vehicle/", getVehicles)
+            .then(response => {console.log("fetchVehicles: ", response); return response})
+            .then(response => response.json())
+            .then(json => {console.log("json: ", json); return json})
+            .then(vehiclesToAdd => dispatch({
+                type: ADD_VEHICLES,
+                payload: vehiclesToAdd
+            }));
+    }
 }
 
 export const deleteVehicle = (vehicle) => {
@@ -49,4 +89,3 @@ export const updateVehicle = (vehicle) => {
 
     }
 }
-
