@@ -1,10 +1,10 @@
 package de.carwallet.backend.domain.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Getter
-@Setter
-@ToString
+@Data
+@AllArgsConstructor
 public class VehicleCreateRequest {
     private String make;
     private String model;

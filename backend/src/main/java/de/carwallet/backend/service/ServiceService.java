@@ -12,6 +12,7 @@ import de.carwallet.backend.utils.MappingUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
@@ -32,6 +33,14 @@ public class ServiceService {
 
     public Service getService(Long id){
         return serviceRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public List<Service> getServicesByServiceProviderId(Long serviceProviderId){
+        return serviceRepository.findByServiceProviderId(serviceProviderId);
+    }
+
+    public List<Service> getServicesByVehicleId(Long vehicleId){
+        return serviceRepository.findByVehicleId(vehicleId);
     }
 
     public Service updateService(Long id, ServiceUpdateRequest serviceUpdateRequest){

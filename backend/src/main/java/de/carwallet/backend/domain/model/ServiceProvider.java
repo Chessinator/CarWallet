@@ -3,12 +3,12 @@ package de.carwallet.backend.domain.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 @Entity
 @Table(name = "service_provider")
-@JsonIgnoreProperties({"services"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -30,6 +30,9 @@ public class ServiceProvider {
     private Collection<ServiceType> serviceTypes = new ArrayList<>();
 
     @OneToMany(targetEntity = Service.class, mappedBy = "serviceProvider", fetch = FetchType.LAZY)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonProperty("service_id")
     private Collection<Service> services = new ArrayList<>();
 }
 

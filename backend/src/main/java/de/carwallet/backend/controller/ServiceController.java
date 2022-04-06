@@ -3,14 +3,11 @@ package de.carwallet.backend.controller;
 import de.carwallet.backend.domain.dto.ServiceCreateRequest;
 import de.carwallet.backend.domain.dto.ServiceUpdateRequest;
 import de.carwallet.backend.domain.model.*;
-import de.carwallet.backend.repository.ServiceProviderRepository;
 import de.carwallet.backend.service.ServiceProviderService;
 import de.carwallet.backend.service.ServiceService;
 import de.carwallet.backend.service.VehicleService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,35 +29,48 @@ public class ServiceController {
         this.serviceProviderService = serviceProviderService;
     }
 
-    // CRUD
+    // API
     @PostMapping
-    public ResponseEntity<Service> addService(@RequestParam(value = "vehicle_id" ,required = true) Long vehicleId,
+    public ResponseEntity<Service> addService(@RequestParam(value = "vehicle_id", required = true) Long vehicleId,
                                               @RequestParam(value = "provider_id", required = true) Long providerId,
                                               @RequestBody ServiceCreateRequest request) {
         try {
             Vehicle vehicle = vehicleService.getVehicle(vehicleId);
             ServiceProvider serviceProvider = serviceProviderService.getServiceProvider(providerId);
-        return ResponseEntity.ok(serviceService.addService(request, serviceProvider, vehicle));
-        } catch (EntityNotFoundException exception){
+            return ResponseEntity.ok(serviceService.addService(request, serviceProvider, vehicle));
+        } catch (EntityNotFoundException exception) {
             return ResponseEntity.noContent().build();
         }
     }
 
     @GetMapping
-    public ResponseEntity<Service> getService(@RequestParam(value = "service_id", required = true) Long id) {
+    public ResponseEntity<List<Service>> getService(@RequestParam(value = "service_id", required = false) Long serviceId,
+                                                    @RequestParam(value = "provider_id", required = false) Long providerId,
+                                                    @RequestParam(value = "vehicle_id", required = false) Long vehicleId) {
+        List<Service> serviceList = new ArrayList<>();
         try {
-            return ResponseEntity.ok(serviceService.getService(id));
-        } catch (EntityNotFoundException exception){
+            if (serviceId != null) {
+                serviceList.add(serviceService.getService(serviceId));
+            } else if (providerId != null) {
+                serviceList.addAll(serviceService.getServicesByServiceProviderId(providerId));
+            } else if (vehicleId != null) {
+                serviceList.addAll(serviceService.getServicesByVehicleId(vehicleId));
+            }
+            return serviceList.isEmpty()
+                    ? ResponseEntity.noContent().build()
+                    : ResponseEntity.ok(serviceList);
+
+        } catch (EntityNotFoundException exception) {
             return ResponseEntity.noContent().build();
         }
     }
 
     @PatchMapping
     public ResponseEntity<Service> updateService(@RequestParam(value = "service_id", required = true) Long id,
-                                                 @RequestBody ServiceUpdateRequest request){
+                                                 @RequestBody ServiceUpdateRequest request) {
         try {
             return ResponseEntity.ok(serviceService.updateService(id, request));
-        } catch (EntityNotFoundException exception){
+        } catch (EntityNotFoundException exception) {
             return ResponseEntity.noContent().build();
         }
     }
@@ -76,7 +86,7 @@ public class ServiceController {
     }
 
     @GetMapping("/provider")
-    public ResponseEntity<List<ServiceProvider>> getServiceProviders(@RequestParam(value = "service_id", required = false) Long id,
+    public ResponseEntity<List<ServiceProvider>> getServiceProviders(@RequestParam(value = "provider_id", required = false) Long id,
                                                                      @RequestParam(value = "service_type", required = false) ServiceType serviceType) {
         List<ServiceProvider> serviceProviderList = new ArrayList<>();
         try {

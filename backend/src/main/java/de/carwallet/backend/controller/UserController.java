@@ -22,6 +22,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    // API
     @GetMapping
     public ResponseEntity<User> getUser() {
         String email = getEmailOfAuthenticatedUser();

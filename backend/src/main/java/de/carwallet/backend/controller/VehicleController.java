@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-
 @RestController
 @RequestMapping("/api/vehicle")
 public class VehicleController {
@@ -30,6 +29,7 @@ public class VehicleController {
         this.userService = userService;
     }
 
+    // API
     @PostMapping
     public ResponseEntity<Vehicle> addVehicle(@RequestBody VehicleCreateRequest request) {
         User currentUser = getCurrentUser();

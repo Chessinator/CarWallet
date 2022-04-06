@@ -1,6 +1,6 @@
 package de.carwallet.backend.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -32,6 +32,9 @@ public class Vehicle {
             mappedBy = "serviceProvider",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonProperty("service_id")
     private Collection<Service> services = new ArrayList<>();
 
 }

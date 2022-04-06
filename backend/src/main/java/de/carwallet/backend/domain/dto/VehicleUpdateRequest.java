@@ -1,12 +1,10 @@
 package de.carwallet.backend.domain.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Getter
-@Setter
-@ToString
+@Data
+@AllArgsConstructor
 public class VehicleUpdateRequest {
     private String make;
     private String model;

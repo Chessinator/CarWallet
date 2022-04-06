@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
-
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 
@@ -33,6 +32,7 @@ public class AuthController {
         this.userService = userService;
     }
 
+    // API
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody UserRegistrationRequest request) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/auth/register").toUriString());
@@ -68,6 +68,4 @@ public class AuthController {
             throw new RuntimeException("Refresh token is missing");
         }
     }
-
-
 }
