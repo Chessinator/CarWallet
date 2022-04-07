@@ -4,36 +4,34 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+@Component
 public class TokenUtils {
 
-    private static final String TOKEN_PREFIX;
-    private static final String TOKEN_SECRET_KEY;
-    private static final String TOKEN_ISSUER;
-    private static final Algorithm algorithm;
+    private static String TOKEN_PREFIX;
+    private static String TOKEN_ISSUER;
+    private static Algorithm ALGORITHM;
 
-    static {
-        TOKEN_PREFIX = "Bearer ";
-        TOKEN_SECRET_KEY = "EIZWBF-BFGGCP-PVFVTX-MZDYTD-GGBWHJ-WOMKXP-VCYIHB-TEGIBI-GHLEOY-KIPLHF";
-        TOKEN_ISSUER = "Car.Wallet";
-        algorithm = Algorithm.HMAC256(TOKEN_SECRET_KEY.getBytes());
+    @Value("${security.token.prefix}")
+    private String prefix;
+    @Value("${security.token.secret}")
+    private String secret;
+    @Value("${security.token.issuer}")
+    private String issuer;
+
+    private TokenUtils() {
     }
 
-    private TokenUtils() { }
-
-    public static String getTokenPrefix(){
+    public static String getTokenPrefix() {
         return TOKEN_PREFIX;
-    }
-
-    public static String getSubjectFromToken(String token) {
-        JWTVerifier verifier = JWT.require(algorithm).build();
-        DecodedJWT decodedJWT = verifier.verify(token);
-        return decodedJWT.getSubject();
     }
 
     public static String generateAccessToken(UserDetails user) {
@@ -42,7 +40,7 @@ public class TokenUtils {
                 .withExpiresAt(new Date(System.currentTimeMillis() + 100 * 60 * 1000))
                 .withIssuer(TOKEN_ISSUER)
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-                .sign(algorithm);
+                .sign(ALGORITHM);
     }
 
     public static String generateRefreshToken(UserDetails user) {
@@ -50,6 +48,19 @@ public class TokenUtils {
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 300 * 60 * 1000))
                 .withIssuer(TOKEN_ISSUER)
-                .sign(algorithm);
+                .sign(ALGORITHM);
+    }
+
+    public static String getSubjectFromToken(String token) {
+        JWTVerifier verifier = JWT.require(ALGORITHM).build();
+        DecodedJWT decodedJWT = verifier.verify(token);
+        return decodedJWT.getSubject();
+    }
+
+    @PostConstruct
+    private void init() {
+        TOKEN_PREFIX = prefix;
+        TOKEN_ISSUER = issuer;
+        ALGORITHM = Algorithm.HMAC256(secret.getBytes());
     }
 }

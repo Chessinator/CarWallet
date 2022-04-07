@@ -50,7 +50,6 @@ public class JWTUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authentication) throws IOException, ServletException {
-
         UserDetails user = userService.loadUserByUsername(authentication.getName());
         String accessToken = TokenUtils.generateAccessToken(user);
         String refreshToken = TokenUtils.generateRefreshToken(user);
