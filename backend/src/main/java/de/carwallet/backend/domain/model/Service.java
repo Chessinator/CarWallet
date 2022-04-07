@@ -18,7 +18,7 @@ public class Service {
     @Column()
     private Long id;
 
-    @ManyToOne(targetEntity = Vehicle.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Vehicle.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "vehicle_id", referencedColumnName = "id", nullable = false)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)

@@ -140,7 +140,7 @@ public class VehicleServiceTest {
         );
         // WHEN | ACT
         when(vehicleRepository.findById(anyLong())).thenReturn(Optional.of(vehicle));
-        vehicleService.deleteVehicle(vehicle.getId());
+        vehicleService.removeUser(vehicle.getId());
         // THEN | ASSERT
         verify(vehicleRepository).delete(any(Vehicle.class));
     }
@@ -152,7 +152,7 @@ public class VehicleServiceTest {
         when(vehicleRepository.findById(anyLong())).thenReturn(Optional.empty());
         // THEN | ASSERT
         assertThatExceptionOfType(EntityNotFoundException.class)
-                .isThrownBy(()->vehicleService.deleteVehicle(42L));
+                .isThrownBy(()->vehicleService.removeUser(42L));
     }
 }
 

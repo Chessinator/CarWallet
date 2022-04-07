@@ -43,8 +43,8 @@ public class VehicleService {
         return vehicleRepository.save(vehicleToUpdate);
     }
 
-    public void deleteVehicle(Vehicle vehicle) {
+    public void removeUser(Vehicle vehicle) {
+        vehicle.setUser(null);
         vehicleRepository.save(vehicle);
-       // vehicleRepository.deleteById(id);
     }
 }

@@ -35,7 +35,7 @@ public class User {
     // When we delete the user entity, our vehicle entity should .
     @OneToMany(targetEntity = Vehicle.class,
             mappedBy = "user",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Collection<Vehicle> vehicles = new ArrayList<>();
 }

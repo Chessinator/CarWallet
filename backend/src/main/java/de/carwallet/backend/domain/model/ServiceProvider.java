@@ -32,7 +32,7 @@ public class ServiceProvider {
 
     @OneToMany(targetEntity = Service.class,
             mappedBy = "serviceProvider",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
