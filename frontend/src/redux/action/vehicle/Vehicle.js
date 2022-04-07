@@ -1,3 +1,5 @@
+import { resolvePath } from "react-router-dom";
+
 export const ADD_VEHICLE = "ADD_VEHICLE";
 export const DELETE_VEHICLE = "DELETE_VEHICLE";
 export const PATCH_VEHICLE = "PATCH_VEHICLE";
@@ -10,7 +12,7 @@ export const DEFAULT_VEHICLE = {
     model: "",
     registrationNumber: "",
     vin: "",
-    year: undefined
+    year: ""
 };
 
 export const addVehicle = ({ vehicle, token }) => {
@@ -67,6 +69,7 @@ export const fetchVehicles = ({ token }) => {
 }
 
 export const deleteVehicle = ({ token, vehicle }) => {
+    const vehicleToDelete = vehicle;
 
     return async dispatch => {
         const delVehicle = {
@@ -75,22 +78,20 @@ export const deleteVehicle = ({ token, vehicle }) => {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            body: vehicle
+            body: JSON.stringify(vehicleToDelete)
         }
 
-        await fetch(`${process.env.REACT_APP_API_URL}/api/vehicle/${vehicle.id}`, delVehicle)
+        await fetch(`${process.env.REACT_APP_API_URL}/api/vehicle?vehicle_id=${vehicle.id}`, delVehicle)
             .then(response => {
-                if (response.status !== 200) {
+                if (response.status !== 202) {
                     return;
                 }
-                response.json
-                .then(data => dispatch({
+                return dispatch({
                     type: DELETE_VEHICLE,
-                    payload: data
-                }))
+                    payload: vehicleToDelete
+                })
             })
             .catch(err => console.error("ERROR DELETING VEHICLE: ", err));
-
     }
 }
 
