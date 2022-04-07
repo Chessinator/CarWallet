@@ -24,4 +24,8 @@ public class ServiceProviderService {
     public List<ServiceProvider> getServiceProviders(ServiceType serviceType) throws MethodArgumentTypeMismatchException {
         return serviceProviderRepository.findByServiceTypes(serviceType);
     }
+
+    public List<ServiceProvider> findAll() {
+        return serviceProviderRepository.findAll();
+    }
 }

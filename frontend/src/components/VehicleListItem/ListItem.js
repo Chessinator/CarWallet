@@ -1,9 +1,7 @@
-import { useState, useEffect } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import './ListItem.css'
 
-
-const ListItem = ({ vehicle: { id, make, model, year, pictures } }) => {
+const ListItem = ({ vehicle: { id, make, model, year, pictures } = {} }) => {
     return (
         <NavLink className="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" to={`/vehicles/${id}`} role="tab" aria-controls="list-profile" >
             <li className="list-group-item" >

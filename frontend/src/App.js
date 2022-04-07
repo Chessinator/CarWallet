@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import NavBar from './components/NavBar/';
 import VehicleContainer from './components/VehicleContainer/';
@@ -11,12 +11,16 @@ import WelcomePage from './components/WelcomePage/WelcomePage';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard'
 import ProtectedRoute from './components/ProtectedRoute';
-import Mock from "./context/Mock";
+import { useSelector } from "react-redux";
 
 function App() {
 
-  const mock = useContext(Mock);
-  const user = mock.user;
+  const userState = useSelector(state => state.user)
+  const user = userState.details;
+
+  useEffect(() => {
+    document.title = "CarWallet"
+  }, []);
 
   return (
     <div className="App">

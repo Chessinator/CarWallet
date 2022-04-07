@@ -55,6 +55,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // public endpoints do not need to be authenticated
                 .antMatchers("/api/auth/**").permitAll()
+
+                .antMatchers("/api/news/**").permitAll()
                 // all other endpoints need to be authenticated
                 .anyRequest().authenticated();
         // Add a filter to validate and authenticate requests

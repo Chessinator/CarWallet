@@ -1,7 +1,5 @@
-import { useState, useContext } from 'react'
-import { useNavigate } from "react-router-dom";
-import {useDispatch} from 'react-redux';
-import Mock from "../../context/Mock";
+import { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import './Login.css';
 import { userLogin } from '../../redux/action/user/User';
 
@@ -10,20 +8,17 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const attemptLogin =  (event) => {
-        event.preventDefault();
-        
-        dispatch(userLogin({email: email,password: password}));
-        // state?.user && navigate("../");
+    const attemptLogin =  async (event) => {
+        event.preventDefault(); 
+        await dispatch(userLogin({email: email,password: password}));
     }  
 
     return (
         <div className="text-center">
             <form className="form-signin" onSubmit={attemptLogin}>
-                <img className="mb-4" src={require('../../logo.svg').default} alt="" width="72" height="57" />
+                <img className="mb-4" src={require('../../assets/images/logo.svg').default} alt="" width="72" height="57" />
                 <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
 
                 <div className="form-floating">
@@ -46,5 +41,8 @@ const Login = () => {
         </div>
     )
 };
+
+
+
 
 export default Login;

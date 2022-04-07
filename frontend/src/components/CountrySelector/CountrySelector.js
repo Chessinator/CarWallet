@@ -10,7 +10,6 @@ const CountrySelector = () => {
             .then(res => res.json())
             .then(json => Object.entries(json).map(
                 ([_key, value]) => value.name.common))
-            .then(countryNames => {console.log("Countries: ", countryNames); return countryNames})
             .then(countryNames => setCountries(countryNames));
     }
 

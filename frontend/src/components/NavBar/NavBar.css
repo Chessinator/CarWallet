@@ -1,5 +1,5 @@
 .navbar {
-    min-height: 7vh;
+    min-height: 60px;
     max-height: 7vh;
     box-shadow: 0 0 1vh 0 black;
     width: 100vw;
@@ -12,10 +12,20 @@
     margin-left: 1rem;
 }
 
-.user-profile {
-    text-decoration: none;
-}
-
 .navbar-text {
     display: flex;
+}
+
+.nav-button {
+    text-decoration: none;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.user-profile {
+    padding-right: 0 !important;
 }
