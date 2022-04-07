@@ -43,9 +43,9 @@ const Vehicle = (state = initialState, action) => {
         }
         case DELETE_VEHICLE: {
             const vehicle = action.payload;
+            delete state.byId[vehicle.id];
             return {
                 ...state,
-                byId: {...state.byId.filter(v => v.id !== vehicle.id)},
                 allIds: [...state.allIds.filter(id => id !== vehicle.id)]
             };
         }
@@ -54,6 +54,7 @@ const Vehicle = (state = initialState, action) => {
             return {
                 ...state,
                 byId: {
+                    ...state.byId,
                     [vehicle.id]: vehicle
                 }};
         default:

@@ -1,21 +1,15 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { addVehicle } from "../../redux/action/vehicle/Vehicle";
+import { addVehicle, DEFAULT_VEHICLE } from "../../redux/action/vehicle/Vehicle";
+
 import "./AddVehicleView.css"
 
 const AddVehicleView = () => {
 
     const dispatch = useDispatch();
-    const tokenState = useSelector(state => state.user.token.access);
+    const token = useSelector(state => state.user.token.access);
 
-    const [vehicle, setVehicle] = useState({
-        make: "",
-        model: "",
-        year: undefined,
-        vin: "",
-        registrationNumber: "",
-        description: ""
-    });
+    const [vehicle, setVehicle] = useState(DEFAULT_VEHICLE);
 
     const onChange = ({ target: { value, id } }) => {
         setVehicle({
@@ -25,7 +19,8 @@ const AddVehicleView = () => {
     };
 
     const onClick = () => {
-        dispatch(addVehicle({ vehicle, token: tokenState }));
+        dispatch(addVehicle({ vehicle, token }));
+        setVehicle(DEFAULT_VEHICLE);
     }
 
     return <div className="add-vehicle-view">

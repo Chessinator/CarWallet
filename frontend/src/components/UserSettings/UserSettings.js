@@ -93,7 +93,7 @@ const UserSettings = () => {
             <Property name="Phone number" id="phone" value={editedUserDetails.phone} disabled={false} onChange={onChange} />
             <Property name="Address" id="address" value={editedUserDetails.address} disabled={false} onChange={onChange} />
             <div className="profile-picture-container row">
-                <label className="col-md-2" forHtml="userPictureInput">Profile Image:</label>
+                <label className="col-md-2" htmlFor="userPictureInput">Profile Image:</label>
                 <input className="col-md-7" type="file" id="userPictureInput" onChange={(e) => encodeImageFileAsURL(e)} />
             </div>
             <button className="user-settings-submit btn btn-light" type="submit" onClick={onClick}>

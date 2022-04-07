@@ -1,0 +1,48 @@
+.service-provider-finder-list-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 80ch;
+    background: white;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    margin: 0.5rem;
+}
+
+.service-provider-finder-list-card-line1,
+.service-provider-finder-list-card-line2,
+.service-provider-finder-list-card-line3 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.service-provider-finder-list-card-line1,
+.service-provider-finder-list-card-line3 {
+    font-size: 0.7rem;
+}
+
+.service-provider-finder-list-card-left {
+    text-align: left;
+}
+
+.service-provider-finder-list-card-right {
+    text-align: right;
+}
+
+.service-provider-finder-list-card-line1 {
+    align-self: top;
+}
+
+.service-provider-finder-list-card-line3 {
+    align-self: bottom;
+}
+
+.service-provider-finder-list-card-line2,
+.service-provider-finder-list-card-line2 > div {
+    text-align: center;
+    text-justify: center;
+    justify-content: center;
+}
