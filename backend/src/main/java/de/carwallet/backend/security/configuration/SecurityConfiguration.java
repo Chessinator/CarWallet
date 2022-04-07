@@ -14,7 +14,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 
 import javax.servlet.http.HttpServletResponse;
@@ -55,7 +54,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // public endpoints do not need to be authenticated
                 .antMatchers("/api/auth/**").permitAll()
-
                 .antMatchers("/api/news/**").permitAll()
                 // all other endpoints need to be authenticated
                 .anyRequest().authenticated();

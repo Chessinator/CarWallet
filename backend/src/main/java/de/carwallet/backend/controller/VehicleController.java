@@ -58,7 +58,7 @@ public class VehicleController {
     public ResponseEntity<Vehicle> updateVehicle(@RequestParam(value = "vehicle_id", required = true) Long id,
                                                  @RequestBody VehicleUpdateRequest request) {
         User currentUser = getCurrentUser();
-        if (currentUser == null || currentUser.getVehicles().contains(vehicleService.getVehicle(id))){
+        if (currentUser == null || !currentUser.getVehicles().contains(vehicleService.getVehicle(id))){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         try {
@@ -71,7 +71,7 @@ public class VehicleController {
     @DeleteMapping
     public ResponseEntity<?> deleteVehicle(@RequestParam(value = "vehicle_id", required = true) Long id) {
         User currentUser = getCurrentUser();
-        if (currentUser == null || currentUser.getVehicles().contains(vehicleService.getVehicle(id))){
+        if (currentUser == null || !currentUser.getVehicles().contains(vehicleService.getVehicle(id))){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         try {
