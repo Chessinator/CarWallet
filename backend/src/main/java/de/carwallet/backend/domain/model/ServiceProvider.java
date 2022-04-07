@@ -30,7 +30,10 @@ public class ServiceProvider {
     @Enumerated(EnumType.STRING)
     private Collection<ServiceType> serviceTypes = new ArrayList<>();
 
-    @OneToMany(targetEntity = Service.class, mappedBy = "serviceProvider", fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Service.class,
+            mappedBy = "serviceProvider",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     @JsonProperty("service_id")

@@ -32,9 +32,10 @@ public class User {
     @ManyToMany
     private Collection<Role> roles = new ArrayList<>();
 
+    // When we delete the user entity, our vehicle entity should .
     @OneToMany(targetEntity = Vehicle.class,
             mappedBy = "user",
             fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Collection<Vehicle> vehicles = new ArrayList<>();
 }

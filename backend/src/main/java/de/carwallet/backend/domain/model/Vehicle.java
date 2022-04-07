@@ -32,7 +32,7 @@ public class Vehicle {
     @OneToMany(targetEntity = Service.class,
             mappedBy = "serviceProvider",
             fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     @JsonProperty("service_id")

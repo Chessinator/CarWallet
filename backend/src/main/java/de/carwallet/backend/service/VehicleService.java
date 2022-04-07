@@ -34,8 +34,6 @@ public class VehicleService {
     }
 
     public List<Vehicle> getVehicles(User user) {
-//        List<Vehicle> vehicleList = vehicleRepository.findByUser(user);
-//        return vehicleList.isEmpty() ? null : vehicleList;
         return vehicleRepository.findByUser(user);
     }
 
@@ -45,9 +43,8 @@ public class VehicleService {
         return vehicleRepository.save(vehicleToUpdate);
     }
 
-    public void deleteVehicle(Long id) {
-        Vehicle vehicleToDelete = vehicleRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        vehicleRepository.delete(vehicleToDelete);
-
+    public void deleteVehicle(Vehicle vehicle) {
+        vehicleRepository.save(vehicle);
+       // vehicleRepository.deleteById(id);
     }
 }

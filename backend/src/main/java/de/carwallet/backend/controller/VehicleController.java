@@ -75,7 +75,10 @@ public class VehicleController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         try {
-            vehicleService.deleteVehicle(id);
+            Vehicle vehicleToRemoveFromUser =vehicleService.getVehicle(id);
+            currentUser.getVehicles().remove(vehicleToRemoveFromUser);
+            vehicleToRemoveFromUser.setUser(null);
+            vehicleService.deleteVehicle(vehicleToRemoveFromUser);
             return ResponseEntity.accepted().build();
         } catch (EntityNotFoundException exception) {
             return ResponseEntity.noContent().build();
