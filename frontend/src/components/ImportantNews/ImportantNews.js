@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import './ServiceProviderNews.css';
+import './ImportantNews.css';
 
-const ServiceProviderNews = () => {
+const ImportantNews = () => {
 
     const [news, setNews] = useState([])
     useEffect(() => {
@@ -10,7 +10,7 @@ const ServiceProviderNews = () => {
             redirect: 'follow'
           };
           
-          fetch(`${process.env.REACT_APP_API_URL}/api/news/serviceprovider`, requestOptions)
+          fetch(`${process.env.REACT_APP_API_URL}/api/news/important`, requestOptions)
             .then(response => {
                 if (response.status !== 200) {
                     return;
@@ -18,12 +18,12 @@ const ServiceProviderNews = () => {
                 response.json()
                 .then(json => setNews(json))
             })
-            .catch(error => console.log('ERROR FETCHING SERVICEPROVIDER NEWS: ', error));
+            .catch(error => console.log('ERROR FETCHING IMPORTANT NEWS: ', error));
     }, [])
 
     return news && (
-        <div className="news news-serviceprovider">
-            <h1>ServiceProvider News</h1>
+        <div className="news news-important">
+            <h1>Important News</h1>
             <ul>
                 {news.map((n, i) => <li key={i}>{n.message}</li>)}
             </ul>
@@ -31,4 +31,4 @@ const ServiceProviderNews = () => {
     )
 }
 
-export default ServiceProviderNews;
+export default ImportantNews;

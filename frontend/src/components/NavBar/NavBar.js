@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { NavLink } from 'react-router-dom'
 import "./NavBar.css"
-import Mock from "../../context/Mock";
 import { useSelector, useDispatch } from "react-redux";
 import { userLogout } from "../../redux/action/user/User";
 
 const NavBar = () => {
 
     const userState = useSelector(state => state.user)
-    const mock = useContext(Mock);
     const user = userState?.details;
     const dispatch = useDispatch();
 
@@ -38,7 +36,7 @@ const NavBar = () => {
                             <>
                                 <button className="logout-button nav-button" onClick={() => dispatch(userLogout())}>Logout</button>
                                 <NavLink className="user-profile nav-button" to="/userSettings">{`${user.firstname} ${user.lastname}`}
-                                    <img className="user-profile-picture" src={user.picture ?? user.pictureBase64} /></NavLink>
+                                    <img className="user-profile-picture" src={user.picture ?? user.pictureBase64} alt="profile"/></NavLink>
                             </>
                         }
                         {!user &&

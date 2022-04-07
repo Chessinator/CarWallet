@@ -9,7 +9,10 @@ const Vehicles = () => {
 
     const dispatch = useDispatch();
     const userState = useSelector(state => state.user);
-    useEffect(() => {dispatch(fetchVehicles({ token: userState.token.access }))}, []);
+    
+    useEffect(() => {
+        dispatch(fetchVehicles({ token: userState.token.access }));
+    }, []);
 
     return (
         <div className="main-content col-md-12">

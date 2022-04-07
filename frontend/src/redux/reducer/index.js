@@ -1,11 +1,15 @@
 import { combineReducers } from "redux";
-import User from "./user/User"
-import Vehicle from "./vehicle/Vehicle";
+import User from "./user"
+import Vehicle from "./vehicle";
+import Service from "./service";
+import ServiceProvider from "./serviceProvider";
 import { LOGOUT_USER } from '../action/user/User.js'
 
 const appReducer = combineReducers({
     user: User,
-    vehicles: Vehicle
+    vehicles: Vehicle,
+    services: Service,
+    serviceProvider: ServiceProvider
 });
 
 const rootReducer = (state, action) => {

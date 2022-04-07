@@ -1,14 +1,12 @@
-import { asyncDispatch } from "../../api.js";
-import { useDispatch } from "react-redux";
+export const UPDATE_USER_DETAILS = "UPDATE_USER_DETAILS";
+export const USER_LOGIN = "LOGIN_USER";
+export const FETCH_USER_DETAILS = "FETCH_USER_DETAILS";
+export const LOGOUT_USER = "LOGOUT_USER";
+export const SET_TOKEN = "SET_TOKEN";
 
-export const UPDATE_USER_DETAILS = "update_user_details";
-export const UPLOAD_USER_PICTURE = "upload_user_picture";
-export const USER_LOGIN = "user_login";
-export const FETCH_USER_DETAILS = "fetch_user_details";
-export const LOGOUT_USER = "logout_user";
-
-
-const url = `${process.env.REACT_APP_API_URL}/api/user`;
+export const setToken = ({ token = {access: "", refresh: ""}}) => {
+    return dispatch => dispatch({type: SET_TOKEN, payload: token})
+}
 
 export const userLogin = ({ email, password }) => {
 
@@ -28,12 +26,17 @@ export const userLogin = ({ email, password }) => {
         };
 
         fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, loginRequest)
-            .then(response => response.json())
-            .then(data => ({
-                access: data.access_token,
-                refresh: data.refresh_token
-            }))
-            .then(token => dispatch(fetchUserDetails({ token })))
+            .then(response => {
+                if (response.status !== 200) {
+                    return;
+                }
+                response.json()
+                    .then(data => ({
+                        access: data.access_token,
+                        refresh: data.refresh_token
+                    }))
+                    .then(token => dispatch(fetchUserDetails({ token })))
+            })
             .catch(error => console.log("ERROR USER LOGIN: ", error));
     }
 }
@@ -50,7 +53,7 @@ export const fetchUserDetails = ({ token }) => {
             .then(res => res.json())
             .then(user => dispatch({
                 type: FETCH_USER_DETAILS,
-                payload: {token: token, user: user}
+                payload: { token: token, user: user }
             }))
             .catch(error => console.log("ERROR USER FETCH: ", error))
     }
@@ -73,17 +76,17 @@ export const updateUserDetails = user => {
             .then(res => res.json())
             .then(userDetails => dispatch({
                 type: UPDATE_USER_DETAILS,
-                payload: {token: token, details: userDetails}
+                payload: { token: token, details: userDetails }
             }))
             .catch(error => console.log("ERROR USER FETCH: ", error))
     }
 };
 
 export const userLogout = () => {
-    return async dispatch =>{
+    return async dispatch => {
         fetch(`${process.env.REACT_APP_API_URL}/logout`)
-        .then(() => dispatch({
-            type: LOGOUT_USER
-        }));
+            .then(() => dispatch({
+                type: LOGOUT_USER
+            }));
     }
 }

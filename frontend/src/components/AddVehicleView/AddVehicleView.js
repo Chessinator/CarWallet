@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { addVehicle } from "../../redux/action/vehicle/Vehicle";
 import "./AddVehicleView.css"
@@ -25,7 +25,6 @@ const AddVehicleView = () => {
     };
 
     const onClick = () => {
-        console.log("vehicle:", vehicle); // ADD REDUX ACTION
         dispatch(addVehicle({ vehicle, token: tokenState }));
     }
 

@@ -1,12 +1,9 @@
 import "./ServiceHistoryEntry.css"
 import Property from "../../Property"
-import Mock from "../../../context/Mock";
-import { useContext } from "react";
 
 const ServiceHistoryEntry = ({ service }) => {
 
-    const mock = useContext(Mock);
-    const serviceProvider = mock.serviceProviders.byId[service.serviceProviderId];
+    const serviceProvider = {};
 
     return (
         <div className="bulletpoint-service-history-entry">

@@ -1,15 +1,16 @@
-import "./ServiceHistory.css"
 import ServiceHistoryEntry from "../ServiceHistoryEntry"
-import Mock from "../../../context/Mock";
 import { useParams } from 'react-router-dom';
-import { useContext } from "react";
+import { useSelector } from "react-redux";
 import Property from "../../Property"
+import { useEffect, useState } from "react";
+
+import "./ServiceHistory.css"
 
 const ServiceHistory = () => {
 
     const { vehicleId } = useParams();
-    const mock = useContext(Mock);
-    const serviceIds = mock.services.byVehicleId[vehicleId];
+    const vehicles = useSelector(state => state.vehicles);
+    const services = useSelector(state => state.services);
 
     let estimated = 0;
     let final = 0;
@@ -17,12 +18,12 @@ const ServiceHistory = () => {
     return (
         <div className="bulletpoint-service-history">
             <h1 className="bulletpoint-h1">Services</h1>
-            {serviceIds?.length > 0 &&
-            serviceIds.map((serviceId) => mock.services.byId[serviceId])
+            {services.byVehicleId[vehicleId] &&
+                services.byVehicleId[vehicleId]
                 .map((service,i) => <ServiceHistoryEntry key={i} service={service} />)}
-            {serviceIds?.length > 0 && 
+            {services.byVehicleId[vehicleId] && 
                 <div className="bulletpoint-service-history-total">
-                    <Property name="Total price" value={`${serviceIds.reduce((sum, serviceId) => sum + (mock.services.byId[serviceId].priceFinal ?? 0), 0)} €`}/>
+                    <Property name="Total price" value={`-sum- €`}/>
                 </div>}
         </div>
     )

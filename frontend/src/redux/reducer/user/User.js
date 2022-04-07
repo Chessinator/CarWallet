@@ -4,11 +4,11 @@ import {
     FETCH_USER_DETAILS
 } from '../../action/user/User.js'
 
-export default (
+const User = (
     state = { token : undefined, details : undefined },
     action = {}
 ) => {
-    switch (action.type) {
+    switch (action?.type) {
         case USER_LOGIN:
             return { details: undefined, token: action.payload };
 
@@ -22,3 +22,5 @@ export default (
             return state;
     }
 }
+
+export default User;

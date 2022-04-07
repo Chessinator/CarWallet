@@ -5,17 +5,16 @@ import {
     ADD_VEHICLES
 } from "../../action/vehicle/Vehicle";
 
-const initialState = { byId: {}, allIds: [] }
+const initialState = {
+    byId: {},
+    allIds: []
+};
 
-export default (state = initialState, action) => {
-    switch (action.type) {
+const Vehicle = (state = initialState, action) => {
+    switch (action?.type) {
         case ADD_VEHICLES: {
-            let newState = {
-                allIds: [],
-                byId: {}
-            }
-            for (let vehicle in action.payload) {
-                newState = {
+            for (let vehicle of action.payload) {
+                state = {
                     ...state,
                     allIds: state.allIds.includes(vehicle.id)
                         ? state.allIds
@@ -26,12 +25,11 @@ export default (state = initialState, action) => {
                     }
                 };
             }
-            return newState;
+            return state;
         }
         case ADD_VEHICLE: {
-            console.log("ADD_VEHICLE payload:", action.payload);
             const vehicle = action.payload;
-            const newState = {
+            state = {
                 ...state,
                 allIds: state.allIds.includes(vehicle.id)
                     ? state.allIds
@@ -41,20 +39,27 @@ export default (state = initialState, action) => {
                     [vehicle.id]: vehicle
                 }
             };
-            console.log("ADD_VEHICLE newState: ", newState);
-            return newState;
+            return state;
         }
         case DELETE_VEHICLE: {
+            const vehicle = action.payload;
             return {
                 ...state,
-                vehicles: state.filter(vehicle => vehicle !== action.payload
-                )
-            }
+                byId: {...state.byId.filter(v => v.id !== vehicle.id)},
+                allIds: [...state.allIds.filter(id => id !== vehicle.id)]
+            };
         }
         case PATCH_VEHICLE:
-            return state.map(vehicle => vehicle.id !== action.payload.id ? vehicle : action.payload);
+            const vehicle = action.payload;
+            return {
+                ...state,
+                byId: {
+                    [vehicle.id]: vehicle
+                }};
         default:
             return state;
 
     }
-}
+};
+
+export default Vehicle;

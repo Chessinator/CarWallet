@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import NavBar from './components/NavBar/';
 import VehicleContainer from './components/VehicleContainer/';
@@ -17,6 +17,10 @@ function App() {
 
   const userState = useSelector(state => state.user)
   const user = userState.details;
+
+  useEffect(() => {
+    document.title = "CarWallet"
+  }, []);
 
   return (
     <div className="App">

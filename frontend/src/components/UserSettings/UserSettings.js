@@ -1,7 +1,5 @@
-import { useState, useContext, useEffect } from "react";
-import Mock from "../../context/Mock";
+import { useState } from "react";
 import Property from "../Property";
-import CountrySelector from "../CountrySelector";
 import "./UserSettings.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserDetails } from "../../redux/action/user/User";
@@ -11,7 +9,6 @@ const UserSettings = () => {
     //const mock = useContext(Mock);
     const stateUser = useSelector(state => state.user)
     const dispatch = useDispatch();
-    const user = stateUser.details;
 
     const encodeImageFileAsURL = ({ target }) => {
         let file = target.files[0];
@@ -77,7 +74,7 @@ const UserSettings = () => {
     const onClick = () => {
         let dispatchDetails = {};
         for (let key of Object.keys(editedUserDetails)) {
-            if (editedUserDetails[key] != stateUser.details[key]) {
+            if (editedUserDetails[key] !== stateUser.details[key]) {
                 dispatchDetails = {
                     ...dispatchDetails,
                     [key]: editedUserDetails[key]

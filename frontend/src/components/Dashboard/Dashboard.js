@@ -1,6 +1,6 @@
-import UrgentNews from '../UrgentNews'
+import ImportantNews from '../ImportantNews'
 import VehicleNews from '../VehicleNews'
-import CustomerAppNews from '../CustomerAppNews'
+import AppNews from '../AppNews'
 import ServiceProviderNews from '../ServiceProviderNews'
 import "./Dashboard.css"
 
@@ -8,9 +8,9 @@ const Dashboard = () =>
     <div className="dashboard">
         <h1>Dashboard</h1>
         <div className="dashboard-news">
-            <UrgentNews />
+            <ImportantNews />
             <VehicleNews />
-            <CustomerAppNews />
+            <AppNews />
             <ServiceProviderNews />
         </div>
     </div>
