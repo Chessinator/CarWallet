@@ -1,5 +1,6 @@
 package de.carwallet.backend.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -9,6 +10,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "user")
 @JsonIgnoreProperties({"password", "roles", "vehicles"})
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

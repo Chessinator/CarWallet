@@ -43,7 +43,7 @@ public class VehicleController {
     public ResponseEntity<?> getVehicles(@RequestParam(value = "vehicle_id", required = false) Long id) {
         User currentUser = getCurrentUser();
         if (currentUser == null){
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         List<Vehicle> vehicleList = vehicleService.getVehicles(currentUser);
         if (id != null) {
@@ -57,6 +57,10 @@ public class VehicleController {
     @PatchMapping
     public ResponseEntity<Vehicle> updateVehicle(@RequestParam(value = "vehicle_id", required = true) Long id,
                                                  @RequestBody VehicleUpdateRequest request) {
+        User currentUser = getCurrentUser();
+        if (currentUser == null || currentUser.getVehicles().contains(vehicleService.getVehicle(id))){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         try {
             return ResponseEntity.ok(vehicleService.updateVehicle(id, request));
         } catch (EntityNotFoundException exception) {
@@ -66,6 +70,10 @@ public class VehicleController {
 
     @DeleteMapping
     public ResponseEntity<?> deleteVehicle(@RequestParam(value = "vehicle_id", required = true) Long id) {
+        User currentUser = getCurrentUser();
+        if (currentUser == null || currentUser.getVehicles().contains(vehicleService.getVehicle(id))){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         try {
             vehicleService.deleteVehicle(id);
             return ResponseEntity.accepted().build();

@@ -34,8 +34,9 @@ public class VehicleService {
     }
 
     public List<Vehicle> getVehicles(User user) {
-        List<Vehicle> vehicleList = vehicleRepository.findByUser(user);
-        return vehicleList.isEmpty() ? null : vehicleList;
+//        List<Vehicle> vehicleList = vehicleRepository.findByUser(user);
+//        return vehicleList.isEmpty() ? null : vehicleList;
+        return vehicleRepository.findByUser(user);
     }
 
     public Vehicle updateVehicle(Long id, VehicleUpdateRequest vehicle) {

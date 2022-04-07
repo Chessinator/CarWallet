@@ -59,4 +59,5 @@ public class JWTOncePerRequestFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         }
     }
+
 }

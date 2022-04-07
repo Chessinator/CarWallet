@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "service")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

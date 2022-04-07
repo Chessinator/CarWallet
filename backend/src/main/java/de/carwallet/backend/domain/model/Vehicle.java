@@ -9,6 +9,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "vehicle")
 @JsonIgnoreProperties({"user"})
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

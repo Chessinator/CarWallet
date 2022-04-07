@@ -9,6 +9,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "service_provider")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
