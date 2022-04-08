@@ -1,4 +1,4 @@
-import { FETCH_SERVICEPROVIDER } from '../../action/serviceprovider/ServiceProvider';
+import { FETCH_SERVICEPROVIDER } from '../../action/serviceProvider/ServiceProvider';
 
 const initialState = {
     byId: {},

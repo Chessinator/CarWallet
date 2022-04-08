@@ -13,7 +13,7 @@ import Dashboard from './components/Dashboard'
 import ProtectedRoute from './components/ProtectedRoute';
 import { useSelector, useDispatch } from "react-redux";
 import { fetchServiceTypes } from './redux/action/serviceTypes/ServiceTypes';
-import { fetchServiceProvider } from './redux/action/serviceprovider/ServiceProvider'
+import { fetchServiceProvider } from './redux/action/serviceProvider/ServiceProvider'
 
 function App() {
 

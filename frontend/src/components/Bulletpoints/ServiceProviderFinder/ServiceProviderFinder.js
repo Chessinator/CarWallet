@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchServiceProvider } from '../../../redux/action/serviceprovider/ServiceProvider'
+import { fetchServiceProvider } from '../../../redux/action/serviceProvider/ServiceProvider'
 import ServiceProviderFinderCard from '../ServiceProviderFinderCard'
 
 import './ServiceProviderFinder.css'
