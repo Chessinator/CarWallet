@@ -36,7 +36,6 @@ public class JWTOncePerRequestFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         if (authorizationHeader != null && authorizationHeader.startsWith(TokenUtils.getTokenPrefix())) {
             try {
