@@ -18,14 +18,14 @@ const ServiceProviderFinder = () => {
     useEffect(() => {
         const headers = {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token.access}`
+            "Authorization": `Bearer ${token?.access ?? token}`
         }
         const request = {
             method: 'GET',
             headers,
             redirect: 'follow'
         };
-        fetch(`http://localhost:8080/api/service/types`, request)
+        fetch(`${process.env.REACT_APP_API_URL}/api/service/types`, request)
             .then(response => {
                 if (response.status !== 200) {
                     return;
@@ -59,9 +59,12 @@ const ServiceProviderFinder = () => {
                 </div>
             </form>
             <ul className="service-provider-finder-list">
-                {serviceProviders.allIds.map((id, i) => <li key={i} className="service-provider-finder-list-entry">
-                    <ServiceProviderFinderCard key={i} serviceProvider={serviceProviders.byId[id]} serviceType={serviceType} />
-                </li>)}
+                {Array.isArray(serviceProviders?.allIds) && serviceProviders.allIds.map(id => serviceProviders.byId[id])
+                    .filter(sp => sp !== undefined)
+                    .filter(serviceProvider => serviceProvider.serviceTypes.includes(serviceType))
+                    .map((serviceProvider, i) => <li key={i} className="service-provider-finder-list-entry">
+                        <ServiceProviderFinderCard key={i} serviceProvider={serviceProvider} serviceType={serviceType} />
+                    </li>)}
             </ul>
         </div>
     );

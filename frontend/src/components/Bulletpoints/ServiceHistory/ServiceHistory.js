@@ -18,10 +18,18 @@ const ServiceHistory = () => {
             <h1 className="bulletpoint-h1">Services</h1>
             {services.byVehicleId[vehicleId] &&
                 services.byVehicleId[vehicleId]
-                    .map((service, i) => <ServiceHistoryEntry key={i} service={service} />)}
+                    .map((serviceId, i) => {
+                        let service = services.byId[serviceId];
+                        if (service === undefined) {
+                            return;
+                        }
+                        final += service.priceFinal ?? 0;
+                        return <ServiceHistoryEntry key={i} service={service} />
+                    })
+            }
             {services.byVehicleId[vehicleId] &&
                 <div className="bulletpoint-service-history-total">
-                    <Property name="Total price" value={`-sum- €`} />
+                    <Property name="Total price" value={`${Math.round(final * 100) / 100} €`} />
                 </div>}
         </div>
     )

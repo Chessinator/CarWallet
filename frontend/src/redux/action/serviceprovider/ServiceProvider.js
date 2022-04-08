@@ -7,7 +7,7 @@ export const fetchServiceProvider = ({ token, serviceProvider, serviceType }) =>
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token.access ?? token}`
             }
         }
         const param = (serviceProvider && `provider_id=${serviceProvider.id}`) ?? (serviceType && `service_type=${serviceType}`);

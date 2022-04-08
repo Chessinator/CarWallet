@@ -22,7 +22,7 @@ export const addVehicle = ({ vehicle, token }) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token.access ?? token}`
             },
             body: JSON.stringify(vehicle)
         }
@@ -49,7 +49,7 @@ export const fetchVehicles = ({ token }) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token.access ?? token}`
             }
         }
 
@@ -76,7 +76,7 @@ export const deleteVehicle = ({ token, vehicle }) => {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token.access ?? token}`
             },
             body: JSON.stringify(vehicleToDelete)
         }
@@ -102,7 +102,7 @@ export const updateVehicle = ({ token, vehicle }) => {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token.access ?? token}`
             },
             body: JSON.stringify(vehicle)
         }

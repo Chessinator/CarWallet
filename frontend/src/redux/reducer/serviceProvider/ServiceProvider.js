@@ -8,18 +8,9 @@ const initialState = {
 const ServiceProvider = (state = initialState, action) => {
     switch (action?.type) {
         case FETCH_SERVICEPROVIDER: {
-            state = initialState;
-            for (let provider of action.payload) {
-                state = {
-                    ...state,
-                    allIds: state.allIds.includes(provider.id)
-                        ? state.allIds
-                        : [...state.allIds, provider.id],
-                    byId: {
-                        ...state.byId,
-                        [provider.id]: provider
-                    }
-                };
+            for (let serviceProvider of action.payload) {
+                state = addServiceProviderToState({ state, serviceProvider })
+                console.log("sp state:", state)
             }
             return state;
         }
@@ -29,3 +20,12 @@ const ServiceProvider = (state = initialState, action) => {
 }
 
 export default ServiceProvider;
+
+const addServiceProviderToState = ({ state, serviceProvider }) => ({
+    ...state,
+    byId: {
+        ...state.byId,
+        [serviceProvider.id]: serviceProvider,
+    },
+    allIds: state.allIds.includes(serviceProvider.id) ? state.allIds : [...state.allIds, serviceProvider.id]
+})

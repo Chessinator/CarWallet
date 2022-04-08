@@ -16,7 +16,7 @@ const ServiceProviderFinderCard = ({ serviceProvider, serviceType }) => {
     const [bookDescription, setBookDescription] = useState("");
 
     const { vehicleId } = useParams();
-    const token = useSelector(state => state.user.token.access);
+    const token = useSelector(state => state.user.token?.access);
     const userAddress = useSelector(state => state.user.details.address);
     const [userGeoPos, setUserGeoPos] = useState(undefined);
     const [providerGeoPos, setProviderGeoPos] = useState(undefined);
@@ -57,17 +57,12 @@ const ServiceProviderFinderCard = ({ serviceProvider, serviceType }) => {
         ) {
             return;
         }
-        console.log("userGeoPos: ", userGeoPos)
-        console.log("providerGeoPos: ", providerGeoPos)
         const dist = haversineDistance(userGeoPos[0], providerGeoPos[0]);
-        console.log("Distance: ", dist, "km");
         setDistance(dist);
 
     }, [providerGeoPos, userGeoPos])
 
     const requestService = () => {
-        console.log("requested service: ", meetDate);
-        toggleExpanded()
         dispatch(addService({
             token,
             vehicle: { id: vehicleId },
@@ -76,6 +71,7 @@ const ServiceProviderFinderCard = ({ serviceProvider, serviceType }) => {
             dateMeeting: meetDate,
             description: bookDescription
         }));
+        toggleExpanded()
     }
 
     return (
@@ -83,7 +79,7 @@ const ServiceProviderFinderCard = ({ serviceProvider, serviceType }) => {
             <div onClick={toggleExpanded}>
                 <div className="service-provider-finder-list-card-line1">
                     <div className="service-provider-finder-list-name service-provider-finder-list-card-left">{name}</div>
-                    <div className="service-provider-finder-list-address service-provider-finder-list-card-right">{address}</div>
+                    <div className="service-provider-finder-list-address service-provider-finder-list-card-right">{address}{distance && distance !== NaN &&` (${Math.round(distance * 10) / 10} km away)`}</div>
                 </div>
                 <div className="service-provider-finder-list-card-line2">
                     <div className="service-provider-finder-list-description">{description}</div>
@@ -97,7 +93,7 @@ const ServiceProviderFinderCard = ({ serviceProvider, serviceType }) => {
                 <div className="service-provider-finder-list-card-booking-top">
                     <input type="date" name="meetDate" value={meetDate} onChange={(e) => setMeetDate(e.target.value)} />
                     <button onClick={requestService}>Book</button>
-                </div >
+                </div>
                 <div className="service-provider-finder-list-card-booking-bottom">
                     <input type="text" name="description" value={bookDescription} onChange={(e) => setBookDescription(e.target.value)} />
                 </div>

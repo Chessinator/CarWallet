@@ -9,11 +9,10 @@ export const fetchService = ({ token, vehicle }) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token.access ?? token}`
             }
         }
-
-        await fetch(`${process.env.REACT_APP_API_URL}/api/service?vehicle_id?${vehicle.id}`, fetchServicesReq)
+        await fetch(`${process.env.REACT_APP_API_URL}/api/service?vehicle_id=${vehicle.id}`, fetchServicesReq)
             .then(response => {
                 if (response.status !== 200) {
                     return;
@@ -35,7 +34,7 @@ export const addService = ({ token, serviceProvider, vehicle, serviceType, dateM
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token.access ?? token}`
             },
             body: JSON.stringify({
                 serviceType,
@@ -44,7 +43,7 @@ export const addService = ({ token, serviceProvider, vehicle, serviceType, dateM
             })
         }
 
-        await fetch(`${process.env.REACT_APP_API_URL}/api/service?vehicle_id=${vehicle.id}&provider_id=${serviceProvider.id}`, addServiceReq)
+        fetch(`${process.env.REACT_APP_API_URL}/api/service?vehicle_id=${vehicle.id}&provider_id=${serviceProvider.id}`, addServiceReq)
             .then(response => {
                 if (response.status !== 200) {
                     return;
@@ -66,7 +65,7 @@ export const updateService = ({ token, service }) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token.access ?? token}`
             }
         }
 

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import Property from "../../Property"
 import { useSelector, useDispatch } from "react-redux";
 import { updateVehicle, DEFAULT_VEHICLE, deleteVehicle } from "../../../redux/action/vehicle/Vehicle"
+import { fetchService } from "../../../redux/action/service/Service"
 
 import '../../../../node_modules/bootstrap-icons/font/bootstrap-icons.css'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -25,18 +26,22 @@ const VehicleDetail = () => {
     const [lock, setLock] = useState(true);
 
     useEffect(() => {
+        dispatch(fetchService({ token, vehicle }));
+    }, [])
+
+    useEffect(() => {
         setVehicle({ ...DEFAULT_VEHICLE, ...vehicles.byId[vehicleId] });
     }, [vehicleId])
 
     const onChange = (e) => setVehicle({ ...vehicle, [e.target.id]: e.target.value })
 
     const saveVehicle = () => {
-        dispatch(updateVehicle({ token: token.access, vehicle }));
+        dispatch(updateVehicle({ token, vehicle }));
         setLock(true);
     }
 
     const removeVehicle = () => {
-        dispatch(deleteVehicle({ token: token.access, vehicle }));
+        dispatch(deleteVehicle({ token, vehicle }));
         setLock(true);
     }
 

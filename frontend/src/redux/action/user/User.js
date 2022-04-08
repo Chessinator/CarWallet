@@ -66,7 +66,7 @@ export const updateUserDetails = user => {
         fetch(`${process.env.REACT_APP_API_URL}/api/user`, {
             method: 'PATCH',
             headers: {
-                "Authorization": `Bearer ${token.access}`,
+                "Authorization": `Bearer ${token?.access ?? token}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(details),

@@ -12,7 +12,7 @@ export const asyncDispatch = async ({
         const header = {
             'Content-Length': body.length.toString(),
             'Content-Type': 'application/json',
-            "Authorization": token ? `Bearer ${token.access ?? token}`: undefined // TODO: CHECK IF UNDEFINED AUTHORIZATION WORKS
+            "Authorization": `Bearer ${token?.access ?? token}` // TODO: CHECK IF UNDEFINED AUTHORIZATION WORKS
         }; 
         const request = {
             header, body, method

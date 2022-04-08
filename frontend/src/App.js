@@ -11,16 +11,38 @@ import WelcomePage from './components/WelcomePage/WelcomePage';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard'
 import ProtectedRoute from './components/ProtectedRoute';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchServiceTypes } from './redux/action/serviceTypes/ServiceTypes';
+import { fetchServiceProvider } from './redux/action/serviceprovider/ServiceProvider'
 
 function App() {
 
-  const userState = useSelector(state => state.user)
-  const user = userState.details;
+  const dispatch = useDispatch();
+
+  const serviceTypes = useSelector(state => state.serviceTypes)
+  const user = useSelector(state => state.user.details);
+  const token = useSelector(state => state.user.token);
 
   useEffect(() => {
     document.title = "CarWallet"
   }, []);
+
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+    dispatch(fetchServiceTypes({ token }));
+  }, [token]);
+
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+    serviceTypes.forEach(serviceType =>
+      dispatch(fetchServiceProvider({ token, serviceType }))
+    );
+  }, [serviceTypes, token])
+
 
   return (
     <div className="App">

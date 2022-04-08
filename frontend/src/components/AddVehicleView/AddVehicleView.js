@@ -7,7 +7,7 @@ import "./AddVehicleView.css"
 const AddVehicleView = () => {
 
     const dispatch = useDispatch();
-    const token = useSelector(state => state.user.token.access);
+    const token = useSelector(state => state.user.token?.access);
 
     const [vehicle, setVehicle] = useState(DEFAULT_VEHICLE);
 
